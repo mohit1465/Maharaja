@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Maharaja Store — Nuts & Dry Fruits</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="header.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="checkout.css" />
+    <style>
+        :root {
+            --font-primary: "Bricolage Grotesque", sans-serif;
+        }
+        
+        html, body, button, input, select, textarea {
+            font-family: var(--font-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="#">
+                    <img src="assets/MAHARAJA logo.png" alt="Maharaja Logo" style="height: 70px; width: auto;">
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" id="btn-home">Home</a></li>
+                    <li><a href="#" class="nav-link" id="btn-profile">Profile</a></li>
+                    <li class="dropdown-header">
+                        <a href="#" class="nav-link">Categories <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="#" id="btn-all-products" data-category="All">All Products</a>
+                            <a href="#" id="btn-almonds" data-category="Almonds">Almonds</a>
+                            <a href="#" id="btn-walnuts" data-category="Walnuts">Walnuts</a>
+                            <a href="#" id="btn-other-dry-fruits" data-category="Other Dry Fruits">Other Dry Fruits</a>
+                        </div>
+                    </li>
+                    <li><a href="#" class="nav-link" id="btn-contact">Contact Us</a></li>
+                    <li><a href="#" class="nav-link" id="btn-orders">My Orders</a></li>
+                </ul>
+            </nav>
+
+            <!-- Right Side Icons -->
+            <div class="header-icons">
+                <ul class="d-flex justify-content-end list-unstyled m-0 align-items-center">
+                    <!-- Wishlist Icon -->
+                    <li>
+                        <a href="#" class="p-2 mx-1 icon-link" id="btn-wishlist">
+                            <i class="far fa-heart" style="font-weight:600; font-size: 20px; margin-bottom: 2px;"></i>
+                            <span class="wish-count-badge" id="wish-count">0</span>
+                        </a>
+                    </li>
+
+                    <!-- Profile Dropdown -->
+                    <li class="profile-dropdown" id="profile-dropdown">
+                        <button class="p-2 mx-1 icon-link profile-btn" id="profile-btn">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <div class="dropdown-content" id="profile-dropdown-content">
+                            <div class="auth-buttons" id="auth-buttons">
+                                <h4>Welcome Back!</h4>
+                                <p>Sign in to access your account</p>
+                                <button class="btn btn-google" id="btn-google-login">
+                                    <i class="fab fa-google"></i> Continue with Google
+                                </button>
+                                <div class="divider">
+                                    <span>or</span>
+                                </div>
+                                <button class="btn btn-primary btn-block" id="btn-email-login">Continue with
+                                    Email</button>
+                                <p class="terms">By continuing, you agree to our <a href="#">Terms of Service</a> and <a
+                                        href="#">Privacy Policy</a>.</p>
+                            </div>
+                            <div class="user-profile d-none" id="user-profile">
+                                <div class="profile-header">
+                                    <img src="assets/icons/user-default.svg" alt="Profile" id="profile-image"
+                                        class="profile-image">
+                                    <div class="profile-info">
+                                        <h4 id="profile-name">User Name</h4>
+                                        <p id="user-email">user@example.com</p>
+                                    </div>
+                                </div>
+                                <ul class="profile-menu">
+                                    <li><a href="#" id="btn-profile-menu"><i class="fas fa-user"></i> My Profile</a></li>
+                                    <li><a href="#" id="btn-orders-menu"><i class="fas fa-shopping-bag"></i> My Orders</a></li>
+                                    <li><a href="#" id="btn-wishlist-menu"><i class="fas fa-heart"></i> Wishlist</a></li>
+                                    <li><a href="#" id="btn-cart-menu"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Sign Out</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Cart Icon -->
+                    <li>
+                        <a href="#" class="p-2 mx-1 icon-link cart-icon" id="btn-cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn d-lg-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav">
+            <ul class="mobile-links">
+                <li><a href="#" class="mobile-link active" id="btn-home-mobile">Home</a></li>
+                <li><a href="#" class="mobile-link" id="btn-profile-mobile">Profile</a></li>
+                <li class="mobile-dropdown">
+                    <a href="#" class="mobile-link">Categories <i class="fas fa-chevron-down"></i></a>
+                    <div class="mobile-dropdown-menu">
+                        <a href="#" id="btn-all-products-mobile" data-category="All">All Products</a>
+                        <a href="#" id="btn-almonds-mobile" data-category="Almonds">Almonds</a>
+                        <a href="#" id="btn-walnuts-mobile" data-category="Walnuts">Walnuts</a>
+                        <a href="#" id="btn-other-dry-fruits-mobile" data-category="Other Dry Fruits">Other Dry Fruits</a>
+                    </div>
+                </li>
+                <li><a href="#" class="mobile-link" id="btn-contact-mobile">Contact Us</a></li>
+                <li><a href="#" class="mobile-link" id="btn-orders-mobile">My Orders</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main id="home" class="main">
+        <!-- Banner Slider -->
+        <section class="banner-slider">
+            <div class="banner-slide active">
+                <img src="assets/banner.png" alt="Banner 1" class="banner-img">
+                <div class="banner-content">
+                    <div class="banner-content-wrapper">
+                        <h1>Organic Dryfruits at your Doorsteps</h1>
+                        <a href="#" class="btn btn-primary">Shop Now</a>
+                        <div class="feature-list">
+                            <div class="feature-list-item">
+                                <h3>Fresh and pure</h3>
+                            </div>
+                            <div class="feature-list-item">
+                                <h3>100% Organic</h3>
+                            </div>
+                            <div class="feature-list-item">
+                                <h3>Free delivery</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="assets/banner.png" alt="Banner 2" class="banner-img">
+                <div class="banner-content">
+                    <div class="banner-content-wrapper">
+                        <h1>Healthy Snacking Made Easy</h1>
+                        <a href="#" class="btn btn-primary">Explore</a>
+                        <div class="feature-list">
+                            <div class="feature-list-item">
+                                <h3>Fresh and pure</h3>
+                            </div>
+                            <div class="feature-list-item">
+                                <h3>100% Organic</h3>
+                            </div>
+                            <div class="feature-list-item">
+                                <h3>Free delivery</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="assets/banner.png" alt="Banner 3" class="banner-img">
+                <div class="banner-content">
+                    <div class="banner-content-wrapper">
+                        <h1>Premium Quality Dry Fruits</h1>
+                        <a href="#" class="btn btn-primary">View Collection</a>
+                        <div class="feature-list">
+                            <div class="feature-list-item">
+                                <h3>Fresh and pure</h3>
+                            </div>
+                            <div class="feature-list-item">
+                                <h3>100% Organic</h3>
+                            </div>
+                            <div class="feature-list-item">
+                                <h3>Free delivery</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="slider-nav prev">❮</button>
+            <button class="slider-nav next">❯</button>
+            <div class="slider-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+            </div>
+        </section>
+
+
+        <!-- Category Section -->
+        <section class="category-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Shop by Category</h2>
+                    <p>Discover our premium selection of dry fruits</p>
+                </div>
+                <div class="category-grid">
+                    <div class="category-card" data-category="Almonds">
+                        <div class="category-img">
+                            <img src="assets/almonds.png" alt="Almonds">
+                        </div>
+                        <h3>Almonds</h3>
+                    </div>
+                    <div class="category-card" data-category="Walnuts">
+                        <div class="category-img">
+                            <img src="assets/walnuts.png" alt="Walnuts">
+                        </div>
+                        <h3>Walnuts</h3>
+                    </div>
+                    <div class="category-card" data-category="Other Dry Fruits">
+                        <div class="category-img">
+                            <img src="assets/other-dryfruits.png" alt="Other Dry Fruits">
+                        </div>
+                        <h3>Other</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-header">
+            <h2>Our Products</h2>
+            <p>Premium quality dry fruits at your doorstep</p>
+        </div>
+        <div class="categories">
+            <button class="category active" data-cat="All">All</button>
+            <button class="category" data-cat="Almonds">Almonds</button>
+            <button class="category" data-cat="Walnuts">Walnuts</button>
+            <button class="category" data-cat="Other Dry Fruits">Other Dry Fruits</button>
+        </div>
+
+        <section id="product-grid" class="product-grid"></section>
+
+         <!-- Stats Section -->
+         <section class="stats-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why Choose Us</h2>
+                    <p>Reasons why you should choose us</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>Product Varieties</h3>
+                        <div class="stat-number">50+</div>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Happy Customers</h3>
+                        <div class="stat-number">100+</div>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Store Locations</h3>
+                        <div class="stat-number">05+</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Features</h2>
+                    <p>What makes us different</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Fresh and pure</h3>
+                        <p>Handpicked with care, our products retain their natural flavor, aroma, and nutrients to ensure you experience authentic freshness in every bite.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3>100% Organic</h3>
+                        <p>Our products are grown without synthetic pesticides, herbicides, or fertilizers, ensuring a pure and natural experience for you.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3>Free delivery</h3>
+                        <p>For orders above ₹500, we offer free delivery across India.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Product Modal -->
+    <main id="product-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span id="modal-close" class="modal-close">&times;</span>
+            <img id="modal-img" src="" alt="" />
+            <div style="flex:1">
+                <h3 id="modal-title"></h3>
+                <p id="modal-hindi"></p>
+
+                <div>
+                    <label for="modal-variant">Package:</label>
+                    <select id="modal-variant"></select>
+                </div>
+
+                <div>
+                    <label for="modal-count">Qty (packages):</label>
+                    <select id="modal-count"></select>
+                </div>
+
+                <p>Unit price: ₹<span id="modal-unit-price">0</span></p>
+                <p>Subtotal: ₹<span id="modal-subtotal">0</span></p>
+
+                <div class="modal-actions">
+                    <button id="modal-add" class="btn add">Add to cart</button>
+                    <button id="modal-wish" class="btn wish">Toggle Wishlist</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Cart Page -->
+    <main id="cart" class="cart-sidebar">
+        <h3>Shopping Cart</h3>
+        <div id="cart-items">
+            <!-- Cart items will be inserted here by JavaScript -->
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+                <a href="#" id="continue-shopping" class="btn" style="margin-top: 15px;">
+                    <i class="fas fa-arrow-left"></i> Continue Shopping
+                </a>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span>₹<span id="cart-total">0</span></span>
+            </div>
+            <button id="checkout-btn" class="btn">
+                <i class="fas fa-credit-card"></i> Proceed to Checkout
+            </button>
+        </div>
+    </main>
+
+    <!-- Wishlist Page -->
+    <main id="wishlist" class="cart-sidebar">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="margin: 0;">Wishlist</h3>
+            <a href="#" id="back-to-shop" class="btn">
+                <i class="fas fa-arrow-left"></i> Back to Shop
+            </a>
+        </div>
+        <div id="wishlist-items">
+            <!-- Wishlist items will be inserted here by JavaScript -->
+            <div class="empty-wishlist">
+                <i class="fas fa-heart"></i>
+                <p>Your wishlist is empty</p>
+                <a href="#" id="browse-products" class="btn" style="margin-top: 15px;">
+                    <i class="fas fa-store"></i> Browse Products
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Profile Page -->
+    <main id="profile" class="main" style="display: none;">
+        <!-- Logged In View -->
+        <div id="profile-logged-in" style="display: none;">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img src="assets/icons/user-default.svg" alt="Profile" id="profile-avatar">
+                        <button class="btn-edit-avatar">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <h2 id="profile-username">Welcome, User</h2>
+                    <p id="profile-email">user@example.com</p>
+                </div>
+                
+                <div class="profile-content">
+                    <div class="profile-section">
+                        <h3>Personal Information</h3>
+                        <form id="profile-form">
+                            <div class="form-group">
+                                <label for="full-name">Full Name</label>
+                                <input type="text" id="full-name" name="full-name" placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Delivery Address</label>
+                                <textarea id="address" name="address" rows="3" placeholder="Enter your delivery address"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                    
+                    <div class="profile-section">
+                        <h3>Account Settings</h3>
+                        <div class="settings-list">
+                            <a href="#" class="setting-item">
+                                <i class="fas fa-key"></i>
+                                <span>Change Password</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                            <a href="#" class="setting-item">
+                                <i class="fas fa-bell"></i>
+                                <span>Notification Settings</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                            <a href="#" class="setting-item">
+                                <i class="fas fa-question-circle"></i>
+                                <span>Help & Support</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                            <a href="#" id="btn-logout-profile" class="setting-item text-danger">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Not Logged In View -->
+        <div id="profile-not-logged-in" class="login-prompt" style="display: none; text-align: center; padding: 40px 20px;">
+            <div class="login-icon" style="font-size: 60px; color: #f8b400; margin-bottom: 20px;">
+                <i class="fas fa-user-lock"></i>
+            </div>
+            <h2>Login Required</h2>
+            <p style="margin-bottom: 30px; color: #666;">Please log in to view your profile and manage your account.</p>
+            <div class="auth-buttons" style="display: flex; flex-direction: column; gap: 15px; max-width: 300px; margin: 0 auto;">
+                <button id="btn-show-login" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Login to Your Account
+                </button>
+                <p style="margin: 15px 0; color: #999; font-size: 14px;">Don't have an account?</p>
+                <button id="btn-show-register" class="btn btn-outline-primary" style="width: 100%;">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <!-- Contact Us Page -->
+    <main id="contact" class="main" style="display: none;">
+        <div class="contact-hero">
+            <div class="contact-hero-content">
+                <h1>Get In Touch</h1>
+                <p>We're here to help and answer any questions you might have</p>
+            </div>
+        </div>
+
+        <section class="contact-info-section">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-details">
+                        <h2>Contact Information</h2>
+                        <p>Feel free to reach out to us through any of these channels. Our team will get back to you as soon as possible.</p>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>Our Location</h3>
+                                <p>Shop No. 5, Opp. Sec.14, Gate No. 2, Hisar, Haryana</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>Phone Number</h3>
+                                <p><a href="tel:+919813901648">+91 98139 01648</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>Email Address</h3>
+                                <p><a href="mailto:haryalidryfruits@gmail.com">haryalidryfruits@gmail.com</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>Website</h3>
+                                <p><a href="https://maharajadryfruit.com" target="_blank">maharajadryfruit.com</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h3>Working Hours</h3>
+                                <p>Monday - Saturday: 9:00 AM - 8:00 PM</p>
+                                <p>Sunday: 10:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+
+                        <div class="social-links">
+                            <h3>Follow Us</h3>
+                            <div class="social-icons">
+                                <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-container">
+                        <h2>Send Us a Message</h2>
+                        <p>Have questions about our products or services? Send us a message and we'll get back to you within 24 hours.</p>
+                        
+                        <form id="contact-form" class="contact-form">
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label for="first-name">First Name</label>
+                                    <input type="text" id="first-name" name="first-name" required>
+                                </div>
+                                <div class="form-group half">
+                                    <label for="last-name">Last Name</label>
+                                    <input type="text" id="last-name" name="last-name" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="" disabled selected>Select a subject</option>
+                                    <option value="product-inquiry">Product Inquiry</option>
+                                    <option value="bulk-order">Bulk Order</option>
+                                    <option value="wholesale">Wholesale Inquiry</option>
+                                    <option value="feedback">Feedback</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Your Message</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="newsletter" name="newsletter" checked>
+                                <label for="newsletter">Subscribe to our newsletter for updates and offers</label>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="map-section">
+            <div class="container">
+                <h2>Find Us On Map</h2>
+                <div class="map-container">
+                    <!-- Replace with your actual Google Maps embed code -->
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.263550092825!2d72.8780!3d19.0760!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c8f04fbf6a5f%3A0x1e3a9dd7c8c5e8f1!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
+                        width="100%" 
+                        height="450" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Find answers to common questions about our products and services</p>
+                </div>
+                
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What are your delivery timings?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We deliver from 9:00 AM to 9:00 PM, seven days a week. Same-day delivery is available for orders placed before 3:00 PM.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Do you offer bulk/wholesale pricing?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, we offer special pricing for bulk and wholesale orders. Please contact our sales team at sales@maharajadryfruits.com for more information.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What is your return policy?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We accept returns within 7 days of delivery if the product is unopened and in its original packaging. Please contact our customer service for return instructions.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How can I track my order?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Once your order is shipped, you will receive a tracking number via email and SMS. You can use this number to track your order on our website or the courier's website.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-box">
+                    <h3>Still have questions?</h3>
+                    <p>Our customer support team is available 24/7 to assist you with any queries.</p>
+                    <a href="tel:+911234567890" class="btn btn-secondary">
+                        <i class="fas fa-phone"></i> Call Us Now
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- My Orders Page -->
+    <main id="orders" class="main" style="display: none;">
+        <div class="orders-container">
+            <h1>My Orders</h1>
+            
+            <div class="orders-tabs">
+                <button class="tab-btn active" data-tab="all-orders">
+                    <i class="fas fa-list-ul"></i> All Orders
+                </button>
+                <button class="tab-btn" data-tab="pending">
+                    <i class="fas fa-clock"></i> Pending
+                </button>
+                <button class="tab-btn" data-tab="delivered">
+                    <i class="fas fa-check-circle"></i> Delivered
+                </button>
+                <button class="tab-btn" data-tab="cancelled">
+                    <i class="fas fa-times-circle"></i> Cancelled
+                </button>
+            </div>
+            
+            <div id="orders-list" class="orders-list">
+                <!-- Order items will be dynamically inserted here -->
+                <div class="no-orders">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h3>No Orders Yet</h3>
+                    <p>You haven't placed any orders yet.</p>
+                    <a href="#" class="btn btn-primary" id="shop-now-btn">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Order Details Modal -->
+            <div id="order-details-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <div id="order-details-content">
+                        <!-- Order details will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <div id="checkoutOverlay" class="checkout-overlay">
+        <div class="checkout-popup">
+            <span class="close-checkout">&times;</span>
+            <h2>Complete Your Order</h2>
+            <div class="checkout-content">
+                <div class="checkout-form">
+                    <h3>Shipping Details</h3>
+                    <form id="checkoutForm" action="https://formsubmit.co/mohit8307521465@gmail.com" method="POST">
+                        <input type="hidden" name="_subject" value="New Order - Maharaja Dryfruits">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_captcha" value="false">
+                        
+                        <div class="form-group">
+                            <input type="text" id="fullName" name="Name" required placeholder="Full Name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="Email" required placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="Phone" required placeholder="Phone Number">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="address" name="Full Address" required placeholder="Full Address"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="city" name="City" required placeholder="City">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="state" name="State" required placeholder="State">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="pincode" name="PIN Code" required placeholder="PIN Code">
+                        </div>
+                        <button type="submit" class="btn btn-submit">Place Order</button>
+                    </form>
+                </div>
+                <div class="payment-section">
+                    <h3>Payment Method</h3>
+                    <div class="qr-code-container">
+                        <p>Scan the QR code to make payment</p>
+                        <div class="qr-code">
+                            <!-- QR Code will be generated here -->
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9671121643@ybl&pn=Haryali%20Dryfruits&cu=INR" alt="UPI QR Code">
+                        </div>
+                        <p class="upi-id">UPI ID: 9671121643@ybl</p>
+                        <p class="note">Please complete the payment and click 'Place Order'</p>
+                        <p class="verification-note">Your payment will be verified within 24 hours</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <!-- About Us -->
+                    <div class="footer-widget">
+                        <div class="footer-logo">
+                            <img src="assets/MAHARAJA logo.png" alt="Maharaja Logo" style="height: 60px; width: auto; margin-bottom: 15px;">
+                        </div>
+                        <p class="footer-about">Maharaja Dry Fruits brings you the finest quality dry fruits and nuts, sourced directly from the best farms. We're committed to quality and freshness in every product.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Quick Links</h3>
+                        <ul class="footer-links">
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Shop</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Products</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Products -->
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Our Products</h3>
+                        <ul class="footer-links">
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Almonds</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Cashews</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Walnuts</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Raisins</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Pistachios</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Dry Fruits Combo</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Contact Us</h3>
+                        <ul class="contact-info">
+                            <li><i class="fas fa-map-marker-alt"></i> Shop No. 5, Opp. Sec.14, Gate No. 2, Hisar, Haryana</li>
+                            <li><i class="fas fa-phone"></i> <a href="tel:+919813901648">+91 98139 01648</a></li>
+                            <li><i class="fas fa-envelope"></i> <a href="mailto:haryalidryfruits@gmail.com">haryalidryfruits@gmail.com</a></li>
+                            <li><i class="fas fa-globe"></i> <a href="https://maharajadryfruit.com" target="_blank">maharajadryfruit.com</a></li>
+                            <li><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 8:00 PM</li>
+                        </ul>
+                        <div class="newsletter">
+                            <h4>Newsletter</h4>
+                            <p>Subscribe to get updates on new products and offers</p>
+                            <form class="newsletter-form">
+                                <input 
+                                    type="email" 
+                                    id="newsletter-email" 
+                                    name="newsletter-email" 
+                                    placeholder="Your Email Address" 
+                                    autocomplete="email"
+                                    required
+                                    aria-label="Your Email Address for Newsletter"
+                                >
+                                <button type="submit" aria-label="Subscribe to newsletter">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2023 Maharaja Dry Fruits. All Rights Reserved.</p>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                        <i class="fab fa-google-pay"></i>
+                        <i class="fab fa-amazon-pay"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="app.js"></script>
+    <script type="module" src="slider.js"></script>
+</body>
+
+</html>
