@@ -1,6 +1,5 @@
 // firebase-config.js
 const firebaseConfig = {
-    apiKey: "AIzaSyDbWHHhhqg1Hkju1Fxj69pqaPmWDE0UlxQ",
     authDomain: "maharaja-fca8b.firebaseapp.com",
     projectId: "maharaja-fca8b",
     storageBucket: "maharaja-fca8b.firebasestorage.app",
