@@ -23,7 +23,7 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
-    transition: padding 0.3s ease;
+    transition: all 0.3s ease-in-out;
 }
 
 .header.scrolled .header-container {
@@ -32,7 +32,7 @@
 
 /* Logo Styles */
 .logo img {
-    height: 70px;
+    height: 50px;
     width: auto;
     transition: transform 0.3s ease;
 }
@@ -420,20 +420,24 @@
 /* Mobile Navigation */
 .mobile-nav {
     display: none;
-    position: fixed;
-    top: 80px;
+    position: absolute;
+    top: 75px;
     left: 0;
     right: 0;
-    background: #fff;
+    background-color: #e9f2e8;
     padding: 15px 20px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     z-index: 999;
     max-height: calc(100vh - 80px);
     overflow-y: auto;
+    transition: all 0.3s ease-in-out;
 }
 
 .mobile-nav.active {
     display: block;
+}
+
+.header.scrolled .mobile-nav {
+    top: 60px;
 }
 
 .mobile-links {

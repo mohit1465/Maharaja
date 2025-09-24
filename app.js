@@ -491,8 +491,21 @@ async function showOrders() {
 if (btnHome) {
   btnHome.addEventListener('click', (e) => {
     e.preventDefault();
-    e.stopPropagation();
     showMainContent();
+    updateActiveNav('btn-home');
+  });
+}
+
+// Mobile navigation event listeners
+const btnHomeMobile = document.getElementById('btn-home-mobile');
+if (btnHomeMobile) {
+  btnHomeMobile.addEventListener('click', (e) => {
+    e.preventDefault();
+    showMainContent();
+    updateActiveNav('btn-home');
+    // Close mobile menu after clicking
+    mobileNav.classList.remove('active');
+    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
   });
 }
 
