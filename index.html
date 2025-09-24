@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="home.css" />
     <link rel="stylesheet" href="checkout.css" />
+    <link rel="stylesheet" href="product-detail.css" />
     <style>
         :root {
             --font-primary: "Bricolage Grotesque", sans-serif;
@@ -318,31 +319,97 @@
         </section>
     </main>
 
-    <!-- Product Modal -->
-    <main id="product-modal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span id="modal-close" class="modal-close">&times;</span>
-            <img id="modal-img" src="" alt="" />
-            <div style="flex:1">
-                <h3 id="modal-title"></h3>
-                <p id="modal-hindi"></p>
-
-                <div>
-                    <label for="modal-variant">Package:</label>
-                    <select id="modal-variant"></select>
+    <!-- Product Detail Section -->
+    <main id="product-detail" class="detail-main" style="display:none;">
+        <div class="detail-container">
+            <a href="#" class="detail-back-button" id="back-to-products">
+                <i class="fas fa-arrow-left"></i> Back to Products
+            </a>
+            
+            <div class="detail-content">
+                <div class="detail-gallery">
+                    <img id="detail-img" src="" alt="Product Image" class="detail-main-image">
                 </div>
-
-                <div>
-                    <label for="modal-count">Qty (packages):</label>
-                    <select id="modal-count"></select>
+                
+                <div class="detail-info">
+                    <h1 id="detail-title" class="detail-title"></h1>
+                    <p id="detail-hindi" class="detail-hindi"></p>
+                    
+                    <div class="detail-price-container">
+                        <span id="detail-unit-price" class="detail-price">₹0</span>
+                    </div>
+                    
+                    <div class="detail-variant">
+                        <label for="detail-variant" class="detail-form-label">Select Weight</label>
+                        <select id="detail-variant" class="detail-form-select">
+                            <option value="250g">250g</option>
+                            <option value="500g">500g</option>
+                            <option value="1kg">1kg</option>
+                        </select>
+                    </div>
+                    
+                    <div class="detail-quantity">
+                        <label for="detail-quantity" class="detail-form-label">Quantity</label>
+                        <select id="detail-quantity" class="detail-form-select">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    
+                    <div class="detail-subtotal">
+                        <span>Subtotal:</span>
+                        <span>₹<span id="detail-subtotal">0</span></span>
+                    </div>
+                    
+                    <div class="detail-actions">
+                        <button id="detail-wish" class="detail-btn detail-btn-outline">
+                            <i class="far fa-heart"></i> Add to Wishlist
+                        </button>
+                        <button id="detail-add" class="detail-btn detail-btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                    
+                    <div class="detail-meta">
+                        <div class="detail-meta-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>100% Natural & Organic</span>
+                        </div>
+                        <div class="detail-meta-item">
+                            <i class="fas fa-truck"></i>
+                            <span>Free Delivery</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-description">
+                        <h3>Product Description</h3>
+                        <p id="detail-description">Premium quality dry fruits and nuts, carefully selected and packed to maintain freshness and nutritional value. Perfect for healthy snacking and cooking.</p>
+                        
+                        <div class="detail-features">
+                            <div class="detail-feature">
+                                <i class="fas fa-check"></i>
+                                <span>100% Natural & Organic</span>
+                            </div>
+                            <div class="detail-feature">
+                                <i class="fas fa-check"></i>
+                                <span>Premium Quality</span>
+                            </div>
+                            <div class="detail-feature">
+                                <i class="fas fa-check"></i>
+                                <span>Rich in Nutrients</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <p>Unit price: ₹<span id="modal-unit-price">0</span></p>
-                <p>Subtotal: ₹<span id="modal-subtotal">0</span></p>
-
-                <div class="modal-actions">
-                    <button id="modal-add" class="btn add">Add to cart</button>
-                    <button id="modal-wish" class="btn wish">Toggle Wishlist</button>
+            </div>
+            
+            <div class="detail-related">
+                <h2>You May Also Like</h2>
+                <div class="detail-related-grid" id="related-products">
+                    <!-- Related products will be populated by JavaScript -->
                 </div>
             </div>
         </div>

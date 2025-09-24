@@ -98,18 +98,18 @@ const btnGoogleLogin = document.getElementById("btn-google-login");
 const btnEmailLogin = document.getElementById("btn-email-login");
 const btnLogout = document.getElementById("btn-logout");
 
-// Modal elements
-const modal = document.getElementById("product-modal");
-const modalClose = document.getElementById("modal-close");
-const modalImg = document.getElementById("modal-img");
-const modalTitle = document.getElementById("modal-title");
-const modalHindi = document.getElementById("modal-hindi");
-const modalUnitPrice = document.getElementById("modal-unit-price");
-const modalSubtotal = document.getElementById("modal-subtotal");
-const modalVariant = document.getElementById("modal-variant");
-const modalCount = document.getElementById("modal-count");
-const modalAdd = document.getElementById("modal-add");
-const modalWish = document.getElementById("modal-wish");
+// Product detail elements
+const productDetail = document.getElementById("product-detail");
+const detailImg = document.getElementById("detail-img");
+const detailTitle = document.getElementById("detail-title");
+const detailHindi = document.getElementById("detail-hindi");
+const detailVariant = document.getElementById("detail-variant");
+const detailQuantity = document.getElementById("detail-quantity");
+const detailDescription = document.getElementById("detail-description");
+const relatedProductsGrid = document.getElementById("related-products");
+
+// Global variable to track the currently viewed product
+let activeProductId = null;
 
 /* ---------------- Header Functionality ---------------- */
 // Mobile menu toggle
@@ -1088,6 +1088,7 @@ const products = [
 
 /* ---------------- App state per signed-in user ---------------- */
 let currentUser = null;
+let wishlist = [];   // Array of product IDs in wishlist
 let localCart = {};     // map key -> { id, variant, count, unitPrice, subtotal, name, image }
 let localWishlist = {}; // map productId -> true
 
@@ -1371,73 +1372,413 @@ document.querySelectorAll('.category').forEach(c => {
   });
 });
 
-/* ---------------- Product modal ---------------- */
-let activeProductId = null;
+/* ---------------- Product Detail Page ---------------- */
 
 function openProductModalWith(id, presetVariant = null, presetCount = 1, autoAdd = false) {
   const p = productById(id);
-  if (!p) return;
-  activeProductId = id;
-  modalImg.src = p.images[1] || "";
-  modalTitle.textContent = p.name;
-  modalHindi.textContent = p.hindiName;
-
-  // fill variant select
-  modalVariant.innerHTML = "";
-  p.quantities_available.forEach(q => {
-    const o = document.createElement('option');
-    o.value = q; o.textContent = q;
-    modalVariant.appendChild(o);
-  });
-
-  // fill count select (1..10)
-  modalCount.innerHTML = "";
-  for (let i = 1; i <= 10; i++) {
-    const o = document.createElement('option'); o.value = i; o.textContent = i;
-    modalCount.appendChild(o);
+  if (!p) {
+    console.error('Product not found with ID:', id);
+    return;
   }
-
-  if (presetVariant) modalVariant.value = presetVariant;
-  modalCount.value = presetCount;
-
+  
+  console.log('Opening product modal for:', p.name, 'Category:', p.category);
+  
+  // Set active product ID
+  activeProductId = id;
+  
+  // Hide all main content sections
+  document.querySelectorAll('.main').forEach(section => {
+    section.style.display = 'none';
+  });
+  
+  // Show the product detail section
+  const productDetail = document.getElementById('product-detail');
+  if (!productDetail) {
+    console.error('Product detail section not found');
+    return;
+  }
+  
+  productDetail.style.display = 'block';
+  
+  // Update product details
+  const detailImg = document.getElementById('detail-img');
+  const detailTitle = document.getElementById('detail-title');
+  const detailHindi = document.getElementById('detail-hindi');
+  const detailDescription = document.getElementById('detail-description');
+  const detailVariant = document.getElementById('detail-variant');
+  const detailQuantity = document.getElementById('detail-quantity');
+  
+  // Set the image source, trying different possible image properties
+  if (detailImg) {
+    const imageSrc = p.images?.['1'] || p.images?.[0] || p.image || '';
+    detailImg.src = imageSrc;
+    detailImg.alt = p.name;
+    
+    // Add error handling in case the image fails to load
+    detailImg.onerror = function() {
+      console.error('Failed to load image:', imageSrc);
+      this.src = 'https://via.placeholder.com/500x500?text=Image+Not+Available';
+    };
+  }
+  if (detailTitle) detailTitle.textContent = p.name;
+  if (detailHindi) detailHindi.textContent = p.hindiName || "";
+  
+  // Set product description or default
+  if (detailDescription) {
+    detailDescription.textContent = p.description || "Premium quality dry fruits and nuts, carefully selected and packed to maintain freshness and nutritional value. Perfect for healthy snacking and cooking.";
+  }
+  
+  // Fill variant select
+  if (detailVariant) {
+    detailVariant.innerHTML = "";
+    const variants = p.quantities_available || ['250g', '500g', '1kg'];
+    variants.forEach(q => {
+      const option = document.createElement('option');
+      option.value = q;
+      option.textContent = q;
+      if (presetVariant === q) option.selected = true;
+      detailVariant.appendChild(option);
+    });
+  }
+  
+  // Fill quantity select (1..10)
+  if (detailQuantity) {
+    detailQuantity.innerHTML = "";
+    for (let i = 1; i <= 10; i++) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = i;
+      detailQuantity.appendChild(option);
+    }
+    if (presetCount) detailQuantity.value = presetCount;
+  }
+  
+  // Update prices
   updateModalPrices();
-
-  modal.style.display = "flex";
-
+  
+  // Update wishlist button state
+  updateWishlistButton(id);
+  
+  // Auto-add to cart if specified
   if (autoAdd) {
-    // not used here, but kept for future flows
-    modalAdd.click();
+    setTimeout(() => {
+      const addButton = document.getElementById('detail-add');
+      if (addButton) addButton.click();
+    }, 100);
+  }
+  
+  // Load related products
+  if (p.category) {
+    console.log('Loading related products for product:', {
+      id: p.id,
+      name: p.name,
+      category: p.category,
+      type: typeof p.category
+    });
+    
+    // Ensure we're passing a string category
+    const category = String(p.category).trim();
+    console.log('Passing category to loadRelatedProducts:', category);
+    
+    loadRelatedProducts(id, category);
+  } else {
+    console.error('Product has no category defined:', {
+      id: p.id,
+      name: p.name,
+      product: p
+    });
+    
+    // Show a message in the UI if no category is found
+    const relatedProductsGrid = document.getElementById('related-products');
+    if (relatedProductsGrid) {
+      relatedProductsGrid.innerHTML = `
+        <div class="no-related-products">
+          <p>No category information available for this product.</p>
+        </div>
+      `;
+    }
   }
 }
-
-modalClose.addEventListener("click", () => modal.style.display = "none");
 
 function updateModalPrices() {
+  if (!activeProductId) return;
+  
   const p = productById(activeProductId);
   if (!p) return;
-  const variant = modalVariant.value;
-  const count = Number(modalCount.value);
-  const unit = calculateUnitPrice(p.price, variant);
-  modalUnitPrice.textContent = formatPrice(unit);
-  modalSubtotal.textContent = formatPrice(unit * count);
+  
+  const variantSelect = document.getElementById('detail-variant');
+  const countSelect = document.getElementById('detail-quantity');
+  const unitPriceElement = document.getElementById('detail-unit-price');
+  const subtotalElement = document.getElementById('detail-subtotal');
+  
+  if (!variantSelect || !countSelect || !unitPriceElement || !subtotalElement) return;
+  
+  const variant = variantSelect.value;
+  const count = parseInt(countSelect.value) || 1;
+  const unitPrice = calculateUnitPrice(p.price, variant);
+  const subtotal = unitPrice * count;
+  
+  unitPriceElement.textContent = '₹' + unitPrice.toFixed(2);
+  subtotalElement.textContent = subtotal.toFixed(2);
 }
-modalVariant.addEventListener("change", updateModalPrices);
-modalCount.addEventListener("change", updateModalPrices);
 
-/* modal add to cart */
-modalAdd.addEventListener("click", async () => {
-  if (!currentUser) return alert("Please login to add to cart.");
-  const variant = modalVariant.value;
-  const count = Number(modalCount.value);
-  await addToCart(activeProductId, variant, count);
-  modal.style.display = "none";
+// Event delegation for back button
+document.addEventListener('click', (e) => {
+  // Handle back to products button
+  if (e.target && e.target.id === 'back-to-products') {
+    e.preventDefault();
+    showMainContent();
+  }
+  
+  // Handle add to cart button
+  if (e.target && e.target.id === 'detail-add') {
+    if (!currentUser) {
+      showMessage('Please login to add to cart.', 'error');
+      return;
+    }
+    
+    const variant = document.getElementById('detail-variant')?.value;
+    const count = parseInt(document.getElementById('detail-quantity')?.value) || 1;
+    
+    if (activeProductId && variant) {
+      addToCart(activeProductId, variant, count);
+      showMessage('Added to cart!', 'success');
+    }
+  }
+  
+  // Handle wishlist button
+  if (e.target && e.target.id === 'detail-wish') {
+    if (!currentUser) {
+      showMessage('Please login to manage your wishlist.', 'error');
+      return;
+    }
+    
+    if (activeProductId) {
+      toggleWishlist(activeProductId).then(() => {
+        updateWishlistButton(activeProductId);
+      }).catch(error => {
+        console.error('Error toggling wishlist:', error);
+      });
+    }
+  }
 });
 
-/* modal wishlist */
-modalWish.addEventListener("click", async () => {
-  if (!currentUser) return alert("Please login to manage wishlist.");
-  await toggleWishlist(activeProductId);
-});
+// Function to update wishlist button state
+function updateWishlistButton(productId) {
+  const wishButton = document.getElementById('detail-wish');
+  if (!wishButton) return;
+  
+  // Ensure wishlist is an array
+  if (!Array.isArray(wishlist)) {
+    wishlist = [];
+  }
+  
+  const isInWishlist = wishlist.includes(productId);
+  wishButton.innerHTML = isInWishlist 
+    ? '<i class="fas fa-heart"></i> Remove from Wishlist' 
+    : '<i class="far fa-heart"></i> Add to Wishlist';
+  wishButton.classList.toggle('active', isInWishlist);
+};
+
+// Load related products
+function loadRelatedProducts(currentProductId, category) {
+  console.log('loadRelatedProducts called with:', { currentProductId, category });
+  
+  const relatedProductsGrid = document.getElementById('related-products');
+  if (!relatedProductsGrid) {
+    console.error('Related products grid element not found');
+    return;
+  }
+  
+  console.log('Loading related products for category:', category);
+  
+  // Clear existing related products
+  relatedProductsGrid.innerHTML = '';
+  
+  // Debug: Log all products and their categories
+  console.log('All products:', products.map(p => ({ id: p.id, name: p.name, category: p.category })));
+  
+  // Normalize category names for comparison
+  const normalizeCategory = (cat) => cat ? cat.toString().toLowerCase().trim() : '';
+  const targetCategory = normalizeCategory(category);
+  
+  console.log('Looking for products in category:', targetCategory);
+  
+  // Get all products from the same category (excluding current product)
+  const relatedProducts = products
+    .filter(p => {
+      if (!p || !p.category) return false;
+      const productCategory = normalizeCategory(p.category);
+      return productCategory === targetCategory && p.id !== currentProductId;
+    })
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 4); // Limit to 4 products
+    
+  console.log('Found related products:', relatedProducts);
+  
+  if (relatedProducts.length === 0) {
+    console.log('No related products found for category:', category);
+    relatedProductsGrid.innerHTML = `
+      <div class="no-related-products">
+        <p>No related products found in the ${category} category.</p>
+      </div>
+    `;
+    return;
+  }
+  
+  // Add related products to the grid with the same styling as main product cards
+  relatedProducts.forEach(product => {
+    const productCard = document.createElement('div');
+    productCard.className = 'card';
+    productCard.dataset.id = product.id;
+    
+    // Get the first available variant price or default to 0
+    const defaultVariant = product.quantities_available?.[0] || '250g';
+    const price = product.prices ? (product.prices[defaultVariant] || Object.values(product.prices)[0] || 0) : 0;
+    
+    // Create card HTML with the same structure as main product cards
+    productCard.innerHTML = `
+      <div class="product-card" data-id="${product.id}" data-action="view">
+        <div class="product-img">
+          <img src="${product.images?.['1'] || product.images?.[0] || product.image || 'https://via.placeholder.com/300x200?text=No+Image'}" 
+               alt="${product.name}" 
+               onerror="this.src='https://via.placeholder.com/300x200?text=${encodeURIComponent(product.name)}'">
+          <span class="product-badge">${product.category}</span>
+          <button class="btnWish ${wishlist.includes(product.id) ? 'active' : ''}" data-id="${product.id}">
+            <i class="${wishlist.includes(product.id) ? 'fas' : 'far'} fa-heart" style="font-weight:600; font-size: 17px;"></i>
+          </button>
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">${product.name}</h3>
+          ${product.hindiName ? `<div class="product-hindi">${product.hindiName}</div>` : ''}
+          <div class="product-selectors">
+            <!-- Hidden select elements for cart functionality -->
+            <select id="related-variant-${product.id}" style="display: none;">
+              ${(product.quantities_available || ['250g']).map(q => `<option value="${q}">${q}</option>`).join("")}
+            </select>
+            <select id="related-count-${product.id}" style="display: none;">
+              ${Array.from({ length: 10 }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("")}
+            </select>
+            
+            <!-- Custom dropdown UI -->
+            <div class="dropdown" id="related-variant-dropdown-${product.id}">
+              <div class="selected">${defaultVariant} <span class="arrow">▼</span></div>
+              <ul>
+                ${(product.quantities_available || ['250g']).map(q => `<li data-value="${q}">${q}</li>`).join("")}
+              </ul>
+            </div>
+            <div class="dropdown" id="related-count-dropdown-${product.id}">
+              <div class="selected">1 <span class="arrow">▼</span></div>
+              <ul>
+                ${Array.from({ length: 10 }, (_, i) => `<li data-value="${i + 1}">${i + 1}</li>`).join("")}
+              </ul>
+            </div>
+          </div>
+          <div class="product-meta">
+            <div class="price-container">
+              <div class="product-price-subtotal">₹ <span id="related-sub-${product.id}">${formatPrice(price)}</span></div>
+            </div>
+            <button class="add-to-cart" data-id="${product.id}" data-product='${JSON.stringify(product)}'>
+              Add to Cart
+            </button>
+          </div>
+        </div>
+        </div>
+      </div>
+    `;
+    
+    // Make the entire card clickable to view details
+    const productCardInner = productCard.querySelector('.product-card');
+    if (productCardInner) {
+      productCardInner.addEventListener('click', (e) => {
+        // Don't trigger if clicking on buttons or dropdowns
+        if (!e.target.closest('button') && !e.target.closest('.dropdown') && !e.target.closest('select')) {
+          openProductModalWith(product.id);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    }
+    
+    // Initialize dropdowns for variant and quantity
+    const variantSelect = productCard.querySelector(`#related-variant-${product.id}`);
+    const countSelect = productCard.querySelector(`#related-count-${product.id}`);
+    const variantDropdown = productCard.querySelector(`#related-variant-dropdown-${product.id}`);
+    const countDropdown = productCard.querySelector(`#related-count-dropdown-${product.id}`);
+    const subSpan = productCard.querySelector(`#related-sub-${product.id}`);
+
+    function updatePriceDisplay() {
+      if (!variantSelect || !countSelect || !subSpan) return;
+      const variant = variantSelect.value;
+      const count = Number(countSelect.value);
+      const unitPrice = calculateUnitPrice(product.price, variant);
+      const subtotal = unitPrice * count;
+      subSpan.textContent = formatPrice(subtotal);
+    }
+
+    // Initialize dropdowns
+    function initDropdown(dropdown, select) {
+      if (!dropdown || !select) return;
+      
+      const selected = dropdown.querySelector('.selected');
+      const options = dropdown.querySelectorAll('ul li');
+
+      // Update selected display
+      selected.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('active');
+      });
+
+      // Handle option selection
+      options.forEach(option => {
+        option.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const value = option.getAttribute('data-value');
+          selected.innerHTML = `${value} <span class="arrow">▼</span>`;
+          dropdown.classList.remove('active');
+          
+          // Update the hidden select
+          select.value = value;
+          select.dispatchEvent(new Event('change'));
+        });
+      });
+    }
+
+    // Initialize both dropdowns
+    if (variantDropdown && variantSelect) initDropdown(variantDropdown, variantSelect);
+    if (countDropdown && countSelect) initDropdown(countDropdown, countSelect);
+
+    // Set up event listeners for price updates
+    if (variantSelect) variantSelect.addEventListener('change', updatePriceDisplay);
+    if (countSelect) countSelect.addEventListener('change', updatePriceDisplay);
+    
+    // Initialize price display
+    updatePriceDisplay();
+    
+    // Add wishlist click handler
+    const wishlistBtn = productCard.querySelector('.btnWish');
+    if (wishlistBtn) {
+      wishlistBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const productId = e.currentTarget.getAttribute('data-id');
+        toggleWishlist(productId);
+      });
+    }
+    
+    // Add to cart button handler
+    const addToCartBtn = productCard.querySelector('.add-to-cart');
+    if (addToCartBtn) {
+      addToCartBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const variant = variantSelect?.value || '250g';
+        const count = parseInt(countSelect?.value || '1');
+        addToCart(product.id, variant, count);
+        showMessage(`${product.name} added to cart!`, 'success');
+      });
+    }
+    
+    relatedProductsGrid.appendChild(productCard);
+  });
+}
 
 /* ---------------- Cart logic (no +/-, only dropdowns) ---------------- */
 async function addToCart(productId, variant, count = 1) {
@@ -2117,6 +2458,15 @@ async function handleCartSelectChange(e) {
 document.addEventListener('DOMContentLoaded', () => {
   if (cartItemsDiv) {
     setupCartEventListeners();
+  }
+  
+  // Add event listeners for variant and quantity selects in product detail
+  if (detailVariant) {
+    detailVariant.addEventListener('change', updateModalPrices);
+  }
+  
+  if (detailQuantity) {
+    detailQuantity.addEventListener('change', updateModalPrices);
   }
 });
 
