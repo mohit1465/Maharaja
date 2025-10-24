@@ -366,9 +366,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 40px;
+    border-radius: 34px;
     object-fit: contain;
-    padding: 10px;
+    padding: 4px;
     transition: all 0.3s ease-in-out;
 }
 
@@ -378,18 +378,18 @@
 
 .product-badge {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 4px;
+    right: 4px;
     background-color: #6bb252;
     color: white;
-    padding: 5px 12px;
+    padding: 2px 12px;
     border-radius: 0 20px 0 20px;
     font-size: 0.8rem;
     font-weight: 600;
     transition: all 0.3s ease-in-out;
 }
 
-.btnWish{
+.btnWish{    
     position: absolute;
     outline: none;
     border: none;
@@ -399,7 +399,7 @@
     color: #ff0000;
     cursor: pointer;
     padding: 5px 15px;
-    border-radius: 20px 0 20px 0;
+    border-radius: 40px 0 40px 0;
     font-size: 0.8rem;
     font-weight: 600;
     transition: all 0.3s ease-in-out;
@@ -408,6 +408,28 @@
 .btnWish.active{
     background-color: #ff0000;
     color: #f5f5f5;
+}
+
+.product-card:hover .btnWish i{
+    animation: wishanimation 1s ease-in-out;
+}
+
+@keyframes wishanimation {
+    0% {
+        transform: translateY(0px);
+    }
+    25% {
+        transform: translateY(-3px);
+    }
+    50% {
+        transform: translateY(0px);
+    }
+    75% {
+        transform: translateY(-3px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 .product-info {
@@ -420,7 +442,6 @@
     font-size: 1.05rem;
     font-weight: 600;
     color: #2c3e50;
-    margin: 0 0 8px 0;
     line-height: 1.4;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -435,9 +456,10 @@
 .product-hindi {
     font-size: 0.85rem;
     color: #7f8c8d;
-    margin-bottom: 12px;
+    margin-bottom: 2px;
     min-height: 1.2em;
     padding: 1px 16px;
+    line-height: 1.3;
 }
 
 .product-details {
@@ -452,7 +474,7 @@
 .product-selectors {
 	display: flex;
 	gap: 10px;
-	margin: 0 12px;
+	margin: 0 8px;
 }
 
 .product-selectors .dropdown {
@@ -478,21 +500,6 @@
     padding: 0 16px;
 }
 
-.product-title {
-    font-size: 1.1rem;
-    color: #333;
-    margin: 0 0 5px;
-    font-weight: 600;
-}
-
-.product-hindi {
-    font-size: 0.85rem;
-    color: #666;
-    margin-bottom: 10px;
-    line-height: 1.3;
-    min-height: 1.3em;
-}
-
 .price-container {
     display: flex;
     flex-direction: column;
@@ -502,14 +509,6 @@
     padding: 12px;
     height: 100%;
     flex-grow: 1;
-}
-
-.product-price-subtotal {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #14540e;
-    line-height: 1.2;
-    margin-right: 8px;
 }
 
 .add-to-cart {
@@ -860,7 +859,7 @@
     }
 
     .banner-slider {
-        height: 60vh;
+        height: 30vh;
     }
 
     .product-info {
@@ -869,10 +868,6 @@
     
     .product-title {
         font-size: 0.95rem;
-    }
-    
-    .product-price-subtotal {
-        font-size: 1.15rem;
     }
     
     .add-to-cart {

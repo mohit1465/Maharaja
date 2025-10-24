@@ -690,6 +690,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+    // Smooth scroll to categories when banner buttons are clicked
+  document.querySelectorAll('.banner-slide .btn-primary').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const categoriesSection = document.querySelector('.categories');
+      if (categoriesSection) {
+        categoriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
   // Back to shop button in wishlist
   const backToShopBtn = document.getElementById('back-to-shop');
   if (backToShopBtn) {
@@ -733,6 +744,16 @@ function filterProducts(category) {
     }
   });
   
+  // Update active state of category cards
+  const allCategoryCards = document.querySelectorAll('.category-card');
+  allCategoryCards.forEach(card => {
+    if (card.dataset.category === category) {
+      card.classList.add('active');
+    } else {
+      card.classList.remove('active');
+    }
+  });
+  
   // Render products with the selected category filter
   renderProducts(category);
 }
@@ -765,32 +786,64 @@ function setupCategoryLink(element, category) {
   });
 }
 
-// Set up category filters for all category buttons
+// Set up category filters for all category buttons and cards
 document.addEventListener('DOMContentLoaded', () => {
+  // Function to handle category selection
+  const handleCategorySelect = (category) => {
+    // First show the main content
+    showMainContent();
+    
+    // Then filter the products
+    filterProducts(category);
+    
+    // Update active state of category buttons
+    const allCategoryButtons = document.querySelectorAll('.category');
+    allCategoryButtons.forEach(btn => {
+      if (btn.dataset.cat === category) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+    
+    // Update active state of category cards
+    const allCategoryCards = document.querySelectorAll('.category-card');
+    allCategoryCards.forEach(card => {
+      if (card.dataset.category === category) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
+    
+    // Scroll to categories section
+    const sectionHeader = document.querySelector('.categories');
+    if (sectionHeader) {
+      sectionHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+  
   // Desktop and mobile category buttons
   const categoryButtons = document.querySelectorAll('.category');
-  
   categoryButtons.forEach(button => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
-      const category = button.dataset.cat;
-      
-      // First show the main content
-      showMainContent();
-      
-      // Then filter the products
-      filterProducts(category);
-      
-      // Scroll to categories section
-      const sectionHeader = document.querySelector('.categories');
-      if (sectionHeader) {
-        sectionHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      handleCategorySelect(button.dataset.cat);
+    });
+  });
+  
+  // Category cards
+  const categoryCards = document.querySelectorAll('.category-card');
+  categoryCards.forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleCategorySelect(card.dataset.category);
       
       // Close mobile menu if open
-      if (mobileNav.classList.contains('active')) {
+      if (mobileNav && mobileNav.classList.contains('active')) {
         mobileNav.classList.remove('active');
-        mobileMenuBtn.classList.remove('active');
+        if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
       }
     });
   });
@@ -1375,6 +1428,9 @@ document.querySelectorAll('.category').forEach(c => {
 /* ---------------- Product Detail Page ---------------- */
 
 function openProductModalWith(id, presetVariant = null, presetCount = 1, autoAdd = false) {
+  // Scroll to top of the page
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
   const p = productById(id);
   if (!p) {
     console.error('Product not found with ID:', id);
@@ -1693,8 +1749,12 @@ function loadRelatedProducts(currentProductId, category) {
       productCardInner.addEventListener('click', (e) => {
         // Don't trigger if clicking on buttons or dropdowns
         if (!e.target.closest('button') && !e.target.closest('.dropdown') && !e.target.closest('select')) {
-          openProductModalWith(product.id);
+          // Scroll to top first, then open the modal
           window.scrollTo({ top: 0, behavior: 'smooth' });
+          // Small delay to allow scroll to start before opening modal
+          setTimeout(() => {
+            openProductModalWith(product.id);
+          }, 100);
         }
       });
     }
@@ -1780,8 +1840,67 @@ function loadRelatedProducts(currentProductId, category) {
   });
 }
 
+/* ---------------- Animation ---------------- */
+const sparkleColors = ['#0f0', '#0a0', '#050', '#ff0', '#ffa500', '#f00', '#fff', '#00f', '#0ff'];
+let sparkleContainer = null;
+
+function createSparkles() {
+  // Create container if it doesn't exist
+  if (!sparkleContainer) {
+    sparkleContainer = document.createElement('div');
+    sparkleContainer.className = 'sparkle-container';
+    document.body.appendChild(sparkleContainer);
+  }
+
+  for (let i = 0; i < 120; i++) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+
+    // Random horizontal position
+    sparkle.style.left = Math.random() * window.innerWidth + 'px';
+
+    // Random size
+    const width = 2 + Math.random() * 8;
+    const height = 4 + Math.random() * 12;
+    sparkle.style.width = `${width}px`;
+    sparkle.style.height = `${height}px`;
+
+    // Random rotation
+    const rotationEnd = (Math.random() * 720 - 360) + 'deg';
+    sparkle.style.setProperty('--rotationEnd', rotationEnd);
+
+    // Random scale
+    sparkle.style.setProperty('--scale', 0.5 + Math.random());
+
+    // Random color
+    const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+    sparkle.style.backgroundColor = color;
+    sparkle.style.color = color;
+
+    // Random animation duration (speed)
+    const duration = 1 + Math.random() * 2; // 1s to 3s
+    sparkle.style.animationDuration = `${duration}s`;
+
+    // Random animation delay
+    const delay = Math.random() * 0.5;
+    sparkle.style.animationDelay = `${delay}s`;
+
+    // Add to container
+    sparkleContainer.appendChild(sparkle);
+
+    // Remove after animation
+    setTimeout(() => {
+      if (sparkle.parentNode === sparkleContainer) {
+        sparkleContainer.removeChild(sparkle);
+      }
+    }, (duration + delay) * 1000);
+  }
+}
+
 /* ---------------- Cart logic (no +/-, only dropdowns) ---------------- */
 async function addToCart(productId, variant, count = 1) {
+  // Create sparkles when adding to cart
+  createSparkles();
   const p = productById(productId);
   if (!p) return;
   const key = sanitizeKey(productId, variant);
