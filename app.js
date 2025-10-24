@@ -2442,30 +2442,32 @@ function renderCart() {
       <div class="cart-item-details">
         <div>
           <div class="cart-item-title">${it.name}</div>
-          <div class="cart-item-variant">Variant:
-            <select id="variant-${key}" name="variant-${key}" class="cart-variant" data-key="${key}">
-              ${productById(it.id).quantities_available.map(v => 
-                `<option value="${v}" ${v === it.variant ? 'selected' : ''}>${v}</option>`
-              ).join('')}
-            </select>
-          </div>
-          <div class="cart-item-count">
-            Quantity:
-            <select id="count-${key}" name="count-${key}" class="cart-countvalue" data-key="${key}">
-              ${Array.from({ length: 10 }, (_, i) => i + 1).map(num =>
-                `<option value="${num}" ${num === it.count ? 'selected' : ''}>${num}</option>`
-              ).join('')}
-            </select>
-          </div>
           <div class="cart-item-price">
             ₹ ${formatPrice(it.subtotal)}
             <span style="font-size:0.8em;color:#6b7280;font-weight:normal">(₹ ${formatPrice(it.unitPrice)} each)</span>
           </div>
+          <div class="cart-item-details-var-count">
+            <div class="cart-item-variant">Variant:
+              <select id="variant-${key}" name="variant-${key}" class="cart-variant" data-key="${key}">
+                ${productById(it.id).quantities_available.map(v => 
+                  `<option value="${v}" ${v === it.variant ? 'selected' : ''}>${v}</option>`
+                ).join('')}
+              </select>
+            </div>
+            <div class="cart-item-count">
+              Quantity:
+              <select id="count-${key}" name="count-${key}" class="cart-countvalue" data-key="${key}">
+                ${Array.from({ length: 10 }, (_, i) => i + 1).map(num =>
+                  `<option value="${num}" ${num === it.count ? 'selected' : ''}>${num}</option>`
+                ).join('')}
+              </select>
+            </div>
+          </div>
         </div>
       </div>
       <div class="cart-item-actions">
-        <button class="btn" data-action="rm" data-key="${key}" title="Remove item">
-          <i class="fas fa-trash"></i>
+        <button class="cart-remove-btn" data-action="rm" data-key="${key}" title="Remove item">
+          <i class="fas fa-trash"></i> Remove
         </button>
       </div>
     `;

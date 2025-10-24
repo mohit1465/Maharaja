@@ -578,6 +578,35 @@ select {
 	font-size: 0.95rem;
 }
 
+.cart-item-details-var-count {
+    display: flex;
+	flex-direction: row;
+	gap: 15px;
+}
+
+.cart-remove-btn{
+    justify-self: end;
+    align-self: end;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 6px 12px;
+    background-color: red;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    border: none;
+}
+
+.cart-remove-btn:hover{
+    background-color: #dd0000;
+}
+
+.cart-remove-btn:active{
+    transform: translateY(1px);
+}
+
 .cart-item-variant,
 .cart-item-count,
 .wishlist-item-variant {
@@ -2454,6 +2483,10 @@ select {
   .product-title {
     font-size: 1.8rem;
   }
+
+.cart-item-title, .wishlist-item-title, .cart-item-price{
+    justify-self: start;
+}
   
   .orders-grid {
     grid-template-columns: 1fr;
@@ -3403,6 +3436,18 @@ select {
     
     .related-product-img {
         height: 130px;
+    }
+
+    
+
+    .cart-remove-btn{
+        width: 100%;
+        padding: 8px 14px;
+        border-radius: 8px;
+    }
+
+    .cart-remove-btn i{
+        margin-right: 10px;
     }
 }
 
