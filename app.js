@@ -3038,62 +3038,8 @@ async function handleCheckout() {
           // Save order to Firestore
           const orderId = await saveOrder(user.uid, orderData);
           
-          // Prepare email data
-          const emailData = {
-            to_name: shippingInfo.name,
-            order_id: orderId,
-            order_date: new Date().toLocaleDateString('en-IN', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            }),
-            order_items: orderData.items.map(item => 
-              `${item.name} (${item.variant}) x ${item.quantity} = ₹${item.subtotal}`
-            ).join('<br>'),
-            order_total: `₹${orderData.total}`,
-            shipping_address: `
-              ${shippingInfo.name}<br>
-              ${shippingInfo.address}<br>
-              ${shippingInfo.city}, ${shippingInfo.state} ${shippingInfo.zip}<br>
-              Phone: ${shippingInfo.phone}
-            `,
-            payment_method: orderData.paymentMethod
-          };
-
-          // Send emails
-          try {
-            // Send email to customer
-            await emailjs.send(
-              'service_6u7jq9h', // Service ID
-              'template_9x8y7z6', // Customer Template ID
-              {
-                ...emailData,
-                to_email: shippingInfo.email,
-                subject: `Order Confirmation #${orderId}`
-              }
-            );
-
-            // Send email to admin (you)
-            await emailjs.send(
-              'service_6u7jq9h', // Same Service ID
-              'template_5v4c3b2', // Admin Template ID
-              {
-                ...emailData,
-                to_email: 'Mohit8307521465@gmail.com',
-                subject: `New Order #${orderId} from ${shippingInfo.name}`
-              }
-            );
-            
-            console.log('Order confirmation emails sent successfully');
-          } catch (emailError) {
-            console.warn('Could not send order confirmation emails:', emailError);
-            // Don't fail the order if email fails
-          }
-          
           // Show success message with order details
-          showMessage(`Order #${orderId} placed successfully! You'll receive a confirmation email shortly.`, 'success');
+          showMessage(`Order #${orderId} placed successfully!`, 'success');
           
           // Close the checkout modal
           document.getElementById('checkoutOverlay').style.display = 'none';
@@ -3105,11 +3051,19 @@ async function handleCheckout() {
           // Refresh orders display
           await showOrders();
           
-          // Clear the cart after successful order
-          localCart = {};
-          await syncCartToFirestore();
-          renderCart();
-          updateCartUI();
+          // Hide the modal after a short delay
+          setTimeout(() => {
+            checkoutOverlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+          }, 1500);
+          
+          try {
+            // Try to submit the form (for email notification)
+            checkoutForm.submit();
+          } catch (emailError) {
+            console.warn('Could not submit email form:', emailError);
+            // This is not critical, so we don't show an error to the user
+          }
           
           // Reset the form
           checkoutForm.reset();
