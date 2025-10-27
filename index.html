@@ -29,6 +29,13 @@
         html, body, button, input, select, textarea {
             font-family: var(--font-primary);
         }
+        
+/* Responsive font size for small screens */
+@media (max-width: 500px) {
+    html,body,button,input,select,textarea,table,th,td,ul,ol,li,div,p,h1,h2,h3,h4,h5,h6 {
+        font-size: -60%; /* Reduce base font size by 10% on small screens */
+    }
+}
     </style>
 </head>
 
@@ -950,6 +957,13 @@
 
     <script type="module" src="app.js"></script>
     <script type="module" src="slider.js"></script>
+    <!-- EmailJS Script -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init('9GvBvHX9o7qQv8p5J'); // Public Key
+        })();
+    </script>
 </body>
 
 </html>
