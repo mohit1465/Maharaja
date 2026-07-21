@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Addresses - Maharaja Dry Fruits</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="MAHARAJA logo.svg">
+    
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8KQYRHMSKN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8KQYRHMSKN');
+    </script>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/search-overlay.css">
+    <link rel="stylesheet" href="css/profile.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+</head>
+
+<body data-page="addresses">
+    
+    <header class="header">
+        <div class="top-header">
+            <div class="header-left">
+                <div class="logo-container">
+                    <img src="assets/MAHARAJA logo.png" alt="Maharaja Logo" class="logo">
+                </div>
+                <div class="brand-name">
+                    <h1 style="color: white;">MAHARAJA</h1>
+                    <p class="tagline">Dry Fruit</p>
+                </div>
+            </div>
+            <div class="header-search-bar">
+                <form action="search.html" method="get">
+                    <input type="text" name="q" class="header-search-input" placeholder="Search for dry fruits, nuts, seeds..." required>
+                    <button type="submit" class="header-search-btn"><lord-icon src="https://cdn.lordicon.com/vayiyuqd.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon></button>
+                </form>
+            </div>
+            <div class="header-icons">
+                <a href="wishlist.html" class="icon" data-section="wishlist"><lord-icon src="https://cdn.lordicon.com/yucrjnnl.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon></a>
+                <a href="cart.html" class="icon" data-section="cart">
+                    <lord-icon src="https://cdn.lordicon.com/fmsilsqx.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" class="icon" data-section="profile"><lord-icon src="https://cdn.lordicon.com/spzqjmbt.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon></a>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="index.html" data-section="home">Home</a></li>
+                <li class="dropdown">
+                    <a href="search.html" class="dropbtn">Shop <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="search.html" class="dropdown-item">
+                            <i class="fas fa-th-large"></i>
+                            <span>All</span>
+                        </a>
+                        <a href="search.html?category=Almonds" class="dropdown-item">
+                            <img src="assets/Category/Almond.png" alt="Almonds" class="dropdown-category-icon">
+                            <span>Almonds</span>
+                        </a>
+                        <a href="search.html?category=Walnuts" class="dropdown-item">
+                            <img src="assets/Category/walnut.png" alt="Walnuts" class="dropdown-category-icon">
+                            <span>Walnuts</span>
+                        </a>
+                        <a href="search.html?category=Cashews" class="dropdown-item">
+                            <img src="assets/Category/cashew.png" alt="Cashews" class="dropdown-category-icon">
+                            <span>Cashews</span>
+                        </a>
+                        <a href="search.html?category=Pistachios" class="dropdown-item">
+                            <img src="assets/Category/pistachio.png" alt="Pistachios" class="dropdown-category-icon">
+                            <span>Pistachios</span>
+                        </a>
+                        <a href="search.html?category=Other Dry Fruits" class="dropdown-item">
+                            <img src="assets/Category/Almond.png" alt="Other Dry Fruits" class="dropdown-category-icon">
+                            <span>More</span>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="about.html" data-section="about">About Us</a></li>
+                <li><a href="contact.html" data-section="contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="profile-section">
+            <div class="profile-container">
+                <h1 class="mobile-page-title">My Addresses</h1>
+                <div class="breadcrumb" id="breadcrumb">
+                    <span class="breadcrumb-item" data-section="home">Home</span>
+                    <span class="breadcrumb-separator">&gt;</span>
+                    <span class="breadcrumb-item" data-section="profile">Profile</span>
+                    <span class="breadcrumb-separator">&gt;</span>
+                    <span class="breadcrumb-item current">Manage Addresses</span>
+                </div>
+
+                <div class="addresses-content" style="margin-top: 30px; padding: 20px;">
+                    <div class="address-header"
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                        <h2 style="font-size: var(--text-h2); font-weight: 700; color: var(--color-black);">My Addresses</h2>
+                        <button id="addAddressBtn" class="btn-primary"
+                            style="background: var(--gradient-brand); color: white; border: none; padding: 12px 25px; border-radius: 50px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-plus"></i> Add New Address
+                        </button>
+                    </div>
+
+                    <div id="addressList" class="address-grid"
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
+                        <!-- Addresses will be loaded here -->
+                        <div class="loading-addresses" style="text-align: center; padding: 40px; grid-column: 1 / -1;">
+                            <i class="fas fa-circle-notch fa-spin"
+                                style="font-size: 32px; color: var(--color-brand); margin-bottom: 15px;"></i>
+                            <p>Loading your addresses...</p>
+                        </div>
+                    </div>
+
+                    <div id="emptyAddresses"
+                        style="display: none; text-align: center; padding: 60px 20px; background: #fcfcfc; border-radius: 40px; border: 1px dashed #ddd;">
+                        <i class="fas fa-map-marked-alt" style="font-size: 60px; color: #eee; margin-bottom: 20px;"></i>
+                        <h3 style="font-size: var(--text-h4); font-weight: 600; margin-bottom: 10px;">No Addresses Saved</h3>
+                        <p style="color: #666; margin-bottom: 25px;">Save your addresses for faster checkout and
+                            deliveries.</p>
+                        <button class="btn-primary open-add-modal"
+                            style="background: var(--gradient-brand); color: white; border: none; padding: 12px 30px; border-radius: 50px; cursor: pointer; font-weight: 600;">Add
+                            Your First Address</button>
+                    </div>
+                </div>
+
+                <!-- Address Modal -->
+                <div id="addressModal" class="modal"
+                    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+                    <div class="modal-content"
+                        style="background: white; width: 95%; max-width: 600px; padding: 40px; border-radius: 40px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.2);">
+                        <span class="close-modal" id="closeAddressModal"
+                            style="position: absolute; top: 25px; right: 30px; font-size: 24px; cursor: pointer; color: #999;"><i
+                                class="fas fa-times"></i></span>
+                        <h2 id="modalTitle"
+                            style="font-size: var(--text-h3); font-weight: 700; margin-bottom: 25px; color: var(--color-black);">
+                            Add New Address</h2>
+
+                        <form id="addressForm">
+                            <input type="hidden" id="addressId">
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label
+                                    style="display: block; margin-bottom: 8px; font-weight: 600; font-size: var(--text-small); margin-left: 10px;">Address
+                                    Label (e.g., Home, Office, Gym)</label>
+                                <input type="text" id="addressLabel" required placeholder="Home"
+                                    style="width: 100%; padding: 15px 20px; border: 1px solid #eee; border-radius: 20px; font-family: inherit; font-size: var(--text-body);">
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                                <div class="form-group">
+                                    <label
+                                        style="display: block; margin-bottom: 8px; font-weight: 600; font-size: var(--text-small); margin-left: 10px;">Receiver
+                                        Name</label>
+                                    <input type="text" id="receiverName" required placeholder="Full Name"
+                                        style="width: 100%; padding: 15px 20px; border: 1px solid #eee; border-radius: 20px; font-family: inherit; font-size: var(--text-body);">
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        style="display: block; margin-bottom: 8px; font-weight: 600; font-size: var(--text-small); margin-left: 10px;">Phone
+                                        Number</label>
+                                    <input type="tel" id="receiverPhone" required placeholder="10-digit mobile"
+                                        style="width: 100%; padding: 15px 20px; border: 1px solid #eee; border-radius: 20px; font-family: inherit; font-size: var(--text-body);">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label
+                                    style="display: block; margin-bottom: 8px; font-weight: 600; font-size: var(--text-small); margin-left: 10px;">Complete
+                                    Address</label>
+                                <textarea id="fullAddress" required rows="3"
+                                    placeholder="House No, Building Name, Street, Area"
+                                    style="width: 100%; padding: 15px 20px; border: 1px solid #eee; border-radius: 20px; font-family: inherit; font-size: var(--text-body); resize: none;"></textarea>
+                            </div>
+
+                            <div
+                                style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 30px;">
+                                <div class="form-group">
+                                    <label
+                                        style="display: block; margin-bottom: 8px; font-weight: 600; font-size: var(--text-small); margin-left: 10px;">City</label>
+                                    <input type="text" id="addressCity" required placeholder="Hisar"
+                                        style="width: 100%; padding: 15px 20px; border: 1px solid #eee; border-radius: 20px; font-family: inherit; font-size: var(--text-body);">
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        style="display: block; margin-bottom: 8px; font-weight: 600; font-size: var(--text-small); margin-left: 10px;">State</label>
+                                    <input type="text" id="addressState" required placeholder="Haryana"
+                                        style="width: 100%; padding: 15px 20px; border: 1px solid #eee; border-radius: 20px; font-family: inherit; font-size: var(--text-body);">
+                                </div>
+                                <div class="form-group">
+                                    <label
+                                        style="display: block; margin-bottom: 8px; font-weight: 600; font-size: var(--text-small); margin-left: 10px;">Pincode</label>
+                                    <input type="text" id="addressPin" required placeholder="125001"
+                                        style="width: 100%; padding: 15px 20px; border: 1px solid #eee; border-radius: 20px; font-family: inherit; font-size: var(--text-body);">
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 15px;">
+                                <button type="button" id="cancelAddress"
+                                    style="flex: 1; padding: 15px; border-radius: 20px; border: 1px solid #eee; background: white; font-weight: 600; cursor: pointer;">Cancel</button>
+                                <button type="submit"
+                                    style="flex: 1; padding: 15px; border-radius: 20px; border: none; background: var(--gradient-brand); color: white; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px rgba(252, 110, 32, 0.2);">Save
+                                    Address</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-bg">
+            <svg viewBox="0 0 400 80" preservedAspectRatio="none">
+                <path d="M 0 20 
+                         Q 0 0 20 0 
+                         L 145 0 
+                         Q 165 0 165 20 
+                         A 35 35 0 0 0 235 20 
+                         Q 235 0 255 0 
+                         L 380 0 
+                         Q 400 0 400 20 
+                         L 400 80 
+                         L 0 80 
+                         Z" filter="url(#shadow)" />
+                <defs>
+                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="5" />
+                        <feOffset dx="0" dy="4" result="offsetblur" />
+                        <feComponentTransfer>
+                            <feFuncA type="linear" slope="0.1" />
+                        </feComponentTransfer>
+                        <feMerge>
+                            <feMergeNode />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                </defs>
+            </svg>
+        </div>
+        <div class="mobile-nav-icons">
+            <a href="index.html" data-section="home" title="Home">
+                <lord-icon src="https://cdn.lordicon.com/ewtxwele.json" trigger="hover" colors="primary:#ffffff" style="width:24px;height:24px"></lord-icon>
+                <div class="active-dot"></div>
+            </a>
+            <a href="wishlist.html" data-section="wishlist" title="Wishlist">
+                <lord-icon src="https://cdn.lordicon.com/yucrjnnl.json" trigger="hover" colors="primary:#ffffff" style="width:24px;height:24px"></lord-icon>
+                <div class="active-dot"></div>
+            </a>
+
+            <div class="nav-extra-space"></div> <!-- Space for the cutout -->
+
+            <a href="search.html" data-section="search" title="Search" class="nav-item-special">
+                <lord-icon src="https://cdn.lordicon.com/vayiyuqd.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon>
+            </a>
+
+            <a href="cart.html" data-section="cart" title="Cart">
+                <lord-icon src="https://cdn.lordicon.com/fmsilsqx.json" trigger="hover" colors="primary:#ffffff" style="width:24px;height:24px"></lord-icon>
+                <span class="cart-count">0</span>
+                <div class="active-dot"></div>
+            </a>
+            <a href="profile.html" data-section="profile" class="mobile-profile-btn-wrapper" title="Profile">
+                <span class="mobile-profile-btn"><lord-icon src="https://cdn.lordicon.com/spzqjmbt.json" trigger="hover" colors="primary:#ffffff" style="width:26px;height:26px"></lord-icon></span>
+                <div class="active-dot"></div>
+            </a>
+        </div>
+    </nav>
+
+    <script src="js/script.js"></script>
+    <script type="module" src="js/auth-state.js"></script>
+<script type="module" src="js/data-cache.js"></script>
+<script type="module" src="js/category-loader.js"></script>
+    <script type="module" src="js/cart-count.js"></script>
+    <script type="module" src="js/addresses.js"></script>
+    <script src="js/cursor-effect.js"></script>
+    <script type="module" src="js/search-overlay.js"></script>
+</body>
+
+</html>

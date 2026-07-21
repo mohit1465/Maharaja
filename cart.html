@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maharaja Dry Fruits - Cart</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="MAHARAJA logo.svg">
+    
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8KQYRHMSKN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8KQYRHMSKN');
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/search-overlay.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/about.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    
+    <!-- Razorpay SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body data-page="cart">
+    
+    <header class="header">
+        <div class="top-header">
+            <div class="header-left">
+                <div class="logo-container">
+                    <img src="assets/MAHARAJA logo.png" alt="Maharaja Logo" class="logo">
+                </div>
+                <div class="brand-name">
+                    <h1 style="color: white;">MAHARAJA</h1>
+                    <p class="tagline">Dry Fruit</p>
+                </div>
+            </div>
+            <div class="header-search-bar">
+                <form action="search.html" method="get">
+                    <input type="text" name="q" class="header-search-input" placeholder="Search for dry fruits, nuts, seeds..." required>
+                    <button type="submit" class="header-search-btn"><lord-icon src="https://cdn.lordicon.com/vayiyuqd.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon></button>
+                </form>
+            </div>
+            <div class="header-icons">
+                <a href="wishlist.html" class="icon" data-section="wishlist"><lord-icon src="https://cdn.lordicon.com/yucrjnnl.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon></a>
+                <a href="cart.html" class="icon" data-section="cart">
+                    <lord-icon src="https://cdn.lordicon.com/fmsilsqx.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" class="icon" data-section="profile"><lord-icon src="https://cdn.lordicon.com/spzqjmbt.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon></a>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="#" data-section="home">Home</a></li>
+                <li class="dropdown">
+                    <a href="search.html" class="dropbtn">Shop <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="search.html" class="dropdown-item">
+                            <i class="fas fa-th-large"></i>
+                            <span>All</span>
+                        </a>
+                        <a href="search.html?category=Almonds" class="dropdown-item">
+                            <img src="assets/Category/Almond.png" alt="Almonds" class="dropdown-category-icon">
+                            <span>Almonds</span>
+                        </a>
+                        <a href="search.html?category=Walnuts" class="dropdown-item">
+                            <img src="assets/Category/walnut.png" alt="Walnuts" class="dropdown-category-icon">
+                            <span>Walnuts</span>
+                        </a>
+                        <a href="search.html?category=Cashews" class="dropdown-item">
+                            <img src="assets/Category/cashew.png" alt="Cashews" class="dropdown-category-icon">
+                            <span>Cashews</span>
+                        </a>
+                        <a href="search.html?category=Pistachios" class="dropdown-item">
+                            <img src="assets/Category/pistachio.png" alt="Pistachios" class="dropdown-category-icon">
+                            <span>Pistachios</span>
+                        </a>
+                        <a href="search.html?category=Other Dry Fruits" class="dropdown-item">
+                            <img src="assets/Category/Almond.png" alt="Other Dry Fruits" class="dropdown-category-icon">
+                            <span>More</span>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="#" data-section="about">About Us</a></li>
+                <li><a href="#" data-section="contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="cart-section">
+            <div class="cart-container">
+                <h1 class="mobile-page-title">Cart</h1>
+                <!-- Breadcrumb -->
+                <div class="breadcrumb" id="breadcrumb">
+                    <span class="breadcrumb-item" data-section="home">Home</span>
+                    <span class="breadcrumb-separator">&gt;</span>
+                    <span class="breadcrumb-item" id="breadcrumbCart" onclick="handleBreadcrumbCart()">Cart</span>
+                    <span class="breadcrumb-separator checkout-only" style="display: none;">&gt;</span>
+                    <span class="breadcrumb-item current checkout-only" style="display: none;">Shipping</span>
+                </div>
+
+
+
+                <div class="cart-views-container">
+                    <!-- Cart List View -->
+                    <div id="cartView" class="view-active">
+                        <div class="cart-list">
+                            <div style="padding: 40px; text-align: center;">Loading your cart...</div>
+                        </div>
+                    </div>
+
+                    <!-- Checkout View -->
+                    <div id="checkoutSection" class="checkout-section" style="display: none;">
+                        <div class="checkout-header">
+                            <h2>Shipping Address</h2>
+                            <button class="back-to-cart" id="backToCart">
+                                <i class="fas fa-arrow-left"></i> Back to Cart
+                            </button>
+                        </div>
+
+                    <form id="checkoutForm" class="checkout-form">
+                        <div class="checkout-layout">
+                            <div class="checkout-left">
+                                <div id="savedAddressesWrapper" class="saved-addresses-wrapper" style="display: none;">
+                                    <h3><i class="fas fa-map-marker-alt"></i> Select a Saved Address</h3>
+                                    <div id="addressBubbles" class="address-bubbles">
+                                        <!-- Address bubbles will be injected here -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="shipping-name">Full Name</label>
+                                    <input type="text" id="shipping-name" name="name" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="shipping-email">Email</label>
+                                        <input type="email" id="shipping-email" name="email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="shipping-phone">Phone Number</label>
+                                        <input type="tel" id="shipping-phone" name="phone" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="shipping-address">Full Address</label>
+                                    <textarea id="shipping-address" name="address" rows="3" required></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="shipping-city">City</label>
+                                        <input type="text" id="shipping-city" name="city" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="shipping-state">State</label>
+                                        <input type="text" id="shipping-state" name="state" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="shipping-pin">PIN Code</label>
+                                        <input type="text" id="shipping-pin" name="pin" required maxlength="6">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="checkout-right">
+                                <div class="order-summary-box">
+                                    <div class="summary-header">
+                                        <h3>Your Cart</h3>
+                                        <span class="item-count-badge">0 Items</span>
+                                    </div>
+                                    <div id="checkoutItemsList" class="checkout-items-list">
+                                        <!-- Items will be injected here -->
+                                    </div>
+                                    
+                                    <div class="coupon-section">
+                                        <div class="coupon-input-wrapper">
+                                            <input type="text" id="couponCode" placeholder="Enter coupon code">
+                                            <button type="button" id="applyCouponBtn">Apply</button>
+                                        </div>
+                                        <div id="couponMessage" class="coupon-message"></div>
+                                    </div>
+
+                                    <div class="price-breakdown">
+                                        <div class="breakdown-row">
+                                            <span>Subtotal</span>
+                                            <span id="checkoutSubtotal">₹0</span>
+                                        </div>
+                                        <div class="breakdown-row discount hidden" id="discountRow">
+                                            <span>Discount</span>
+                                            <span id="checkoutDiscount">-₹0</span>
+                                        </div>
+                                        <div class="breakdown-row">
+                                            <span>Delivery Fee</span>
+                                            <span id="checkoutDeliveryFee">₹50</span>
+                                        </div>
+                                        <div class="breakdown-row total">
+                                            <span>Grand Total</span>
+                                            <span id="checkoutGrandTotal">₹0</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="checkout-form-divider"></div>
+
+                                    <div class="payment-method-section">
+                                        <h3>Select Payment Method</h3>
+                                        <div class="payment-options">
+                                            <label class="payment-option active">
+                                                <input type="radio" name="payment-method" value="cod" checked>
+                                                <div class="option-content">
+                                                    <i class="fas fa-truck"></i>
+                                                    <div class="option-details">
+                                                        <span class="option-title">Cash on Delivery</span>
+                                                        <span class="option-desc">Pay when you receive orders</span>
+                                                    </div>
+                                                </div>
+                                                <div class="check-mark"><i class="fas fa-check-circle"></i></div>
+                                            </label>
+                                            <label class="payment-option">
+                                                <input type="radio" name="payment-method" value="online">
+                                                <div class="option-content">
+                                                    <i class="fas fa-credit-card"></i>
+                                                    <div class="option-details">
+                                                        <span class="option-title">Online Payment</span>
+                                                        <span class="option-desc">Pay securely with Razorpay</span>
+                                                    </div>
+                                                </div>
+                                                <div class="check-mark"><i class="fas fa-check-circle"></i></div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="sticky-payment-container">
+                                        <div class="secure-checkout-badge">
+                                            <i class="fas fa-shield-alt"></i> 100% Secure Checkout
+                                        </div>
+                                        <button type="submit" class="place-order-btn">
+                                            <i class="fas fa-lock"></i> Pay & Place Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+                <!-- Add padding to account for fixed bottom bar -->
+                <div class="cart-bottom-padding"></div>
+            </div>
+
+            <!-- Fixed Bottom Summary Bar -->
+            <div class="cart-summary-bar">
+                <div class="summary-left">
+                    <div class="summary-main">
+                        <span class="summary-label">Subtotal</span>
+                        <span class="summary-value">₹0</span>
+                    </div>
+                    <div class="summary-savings" style="display: none; color: #27ae60; font-size: 12px; font-weight: 600; margin-top: 2px;">
+                        <span>You Save: </span>
+                        <span class="savings-value">₹0</span>
+                    </div>
+                </div>
+                <button class="buy-all-btn">Buy All</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="assets/MAHARAJA logo.png" alt="Maharaja Logo">
+                    <h3> Maharaja Dry Fruits</h3>
+                </div>
+                <p class="footer-description">Maharaja Dry Fruits brings you the finest quality dry fruits and nuts,
+                    sourced directly from the best farms. We're committed to quality and freshness in every product.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#" data-section="home">Home</a></li>
+                    <li><a href="#" data-section="search">Shop</a></li>
+                    <li><a href="#" data-section="about">About Us</a></li>
+                    <li><a href="#" data-section="search">Products</a></li>
+                    <li><a href="#" data-section="contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Our Products</h4>
+                <ul>
+                    <li><a href="#" data-section="search">Almonds</a></li>
+                    <li><a href="#" data-section="search">Walnuts</a></li>
+                    <li><a href="#" data-section="search">Dry Fruits Combo</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> Shop No. 5, Opp. Sec.14, Gate No. 2, Hisar, Haryana</p>
+                    <p><i class="fas fa-phone"></i> +91 98139 01648</p>
+                    <p><i class="fas fa-envelope"></i> haryalidryfruits@gmail.com</p>
+                    <p><i class="fas fa-globe"></i> maharajadryfruit.com</p>
+                    <p><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 8:00 PM</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/maharajadryfruithisar/" target="_blank" class="social-icon" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://wa.link/b3z7vx" target="_blank" class="social-icon" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <nav class="mobile-nav">
+        <div class="mobile-nav-bg">
+            <svg viewBox="0 0 400 80" preservedAspectRatio="none">
+                <path d="M 0 20 
+                         Q 0 0 20 0 
+                         L 145 0 
+                         Q 165 0 165 20 
+                         A 35 35 0 0 0 235 20 
+                         Q 235 0 255 0 
+                         L 380 0 
+                         Q 400 0 400 20 
+                         L 400 80 
+                         L 0 80 
+                         Z" filter="url(#shadow)" />
+                <defs>
+                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="5" />
+                        <feOffset dx="0" dy="4" result="offsetblur" />
+                        <feComponentTransfer>
+                            <feFuncA type="linear" slope="0.1" />
+                        </feComponentTransfer>
+                        <feMerge>
+                            <feMergeNode />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                </defs>
+            </svg>
+        </div>
+        <div class="mobile-nav-icons">
+            <a href="index.html" data-section="home" title="Home">
+                <lord-icon src="https://cdn.lordicon.com/ewtxwele.json" trigger="hover" colors="primary:#ffffff" style="width:24px;height:24px"></lord-icon>
+                <div class="active-dot"></div>
+            </a>
+            <a href="wishlist.html" data-section="wishlist" title="Wishlist">
+                <lord-icon src="https://cdn.lordicon.com/yucrjnnl.json" trigger="hover" colors="primary:#ffffff" style="width:24px;height:24px"></lord-icon>
+                <div class="active-dot"></div>
+            </a>
+
+            <div class="nav-extra-space"></div> <!-- Space for the cutout -->
+
+            <a href="search.html" data-section="search" title="Search" class="nav-item-special">
+                <lord-icon src="https://cdn.lordicon.com/vayiyuqd.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon>
+            </a>
+
+            <a href="cart.html" data-section="cart" title="Cart">
+                <lord-icon src="https://cdn.lordicon.com/fmsilsqx.json" trigger="hover" colors="primary:#ffffff" style="width:24px;height:24px"></lord-icon>
+                <span class="cart-count">0</span>
+                <div class="active-dot"></div>
+            </a>
+            <a href="profile.html" data-section="profile" class="mobile-profile-btn-wrapper" title="Profile">
+                <span class="mobile-profile-btn"><lord-icon src="https://cdn.lordicon.com/spzqjmbt.json" trigger="hover" colors="primary:#ffffff" style="width:26px;height:26px"></lord-icon></span>
+                <div class="active-dot"></div>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Floating WhatsApp Icon -->
+    <a href="https://wa.link/b3z7vx" target="_blank" class="floating-whatsapp" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="js/script.js"></script>
+    <script type="module" src="js/image-helper.js"></script>
+    <script type="module" src="js/auth-state.js"></script>
+<script type="module" src="js/data-cache.js"></script>
+<script type="module" src="js/category-loader.js"></script>
+    <script type="module" src="js/cart-count.js"></script>
+    <script type="module" src="js/cart.js"></script>
+    <script src="js/cursor-effect.js"></script>
+    <script type="module" src="js/search-overlay.js"></script>
+</body>
+
+</html>

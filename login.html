@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup - Maharaja Dry Fruits</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="MAHARAJA logo.svg">
+    
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8KQYRHMSKN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8KQYRHMSKN');
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/login-signup.css">
+    <style>
+        @media (hover: hover) and (pointer: fine) {
+            body {
+                cursor: url("assets/Particles/Almond.png") 16 16, auto;
+            }
+        }
+        @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+            body,
+            body.custom-cursor-active,
+            body.custom-cursor-active * {
+                cursor: auto !important;
+            }
+        }
+        body.custom-cursor-active,
+        body.custom-cursor-active * {
+            cursor: none !important;
+        }
+        #customCursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            pointer-events: none;
+            z-index: 2147483647;
+            transform: translate(calc(-50% + 8px), calc(-50% + 8px));
+            display: none;
+            transition: transform 0.08s ease-out;
+        }
+    </style>
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+</head>
+
+<body data-page="login">
+    <section class="auth-layout">
+        <!-- Background image container for desktop left/mobile top -->
+        <div class="auth-image-container">
+            <img src="assets/login-bg.png" alt="Premium Dry Fruits" class="auth-bg-image">
+        </div>
+        <div class="auth-panel auth-panel-right">
+            <div class="auth-panel-content">
+
+                <img src="assets/MAHARAJA logo.png" class="login-logo">
+
+                <h3 id="stepTitle">Continue to buy fresh dry fruits</h3>
+
+                <div class="progress" id="progressContainer" style="display: none;">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <span id="progressText">Step 1 of 7</span>
+                </div>
+
+                <div id="unifiedAuthSection" class="auth-section active">
+                    <!-- STEP 1: Entry Screen -->
+                    <div class="step active" data-step="1">
+                        <div class="auth-action-group">
+                            <button class="google-btn" id="googleEntryBtn">
+                                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"
+                                    height="20">
+                                Continue with Google
+                            </button>
+                            <div class="divider">or</div>
+                            <button id="emailEntryBtn" class="secondary-btn">Continue with Email</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Enter Email -->
+                    <div class="step" data-step="2">
+                        <p class="auth-info-text">Enter your email address</p>
+                        <div class="auth-form-row">
+                            <input type="email" placeholder="Email address" id="emailInput">
+                        </div>
+                        <div class="auth-action-group">
+                            <button id="emailNextBtn" class="primary-btn">Continue</button>
+                            <button class="back-btn">Back</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Password Verification (Existing Users) -->
+                    <div class="step" data-step="3">
+                        <p class="auth-info-text" id="existingEmailDisplay"></p>
+                        <div class="auth-form-row">
+                            <input type="password" placeholder="Enter your password" id="loginPassword">
+                        </div>
+                        <p class="auth-link" id="forgotPasswordLink">Forgot Password?</p>
+                        <div class="auth-action-group">
+                            <button id="verifyPasswordBtn" class="primary-btn">Verify</button>
+                            <button class="back-btn">Back</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Create Password (New Users) -->
+                    <div class="step" data-step="4">
+                        <p class="auth-info-text" id="newEmailDisplay"></p>
+                        <div class="auth-form-row">
+                            <input type="password" placeholder="Enter your password" id="createPassword">
+                        </div>
+                        <div class="auth-action-group">
+                            <button id="createAccountBtn" class="primary-btn">Continue</button>
+                            <button class="back-btn">Back</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: Name -->
+                    <div class="step" data-step="5">
+                        <p class="auth-info-text">Enter your name</p>
+                        <div class="auth-form-row">
+                            <input placeholder="First name" id="firstName" required>
+                            <input placeholder="Last name" id="lastName">
+                        </div>
+                        <div class="auth-action-group">
+                            <button id="nameNextBtn" class="primary-btn">Next</button>
+                            <button class="back-btn">Back</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 6: Date of Birth -->
+                    <div class="step" data-step="6">
+                        <p class="auth-info-text">Select your date of birth <span class="optional-label">(Optional)</span></p>
+                        <p class="coupon-hint" style="color: #fc6e20; font-size: 13px; font-weight: 600; margin-top: -10px; margin-bottom: 15px;"><i class="fas fa-gift"></i> Answer to unlock a birthday coupon!</p>
+                        <div class="auth-form-row">
+                            <input type="date" placeholder="Date of Birth" id="dob">
+                        </div>
+                        <div class="auth-action-group">
+                            <button id="dobNextBtn" class="primary-btn">Next</button>
+                            <button id="dobSkipBtn" class="skip-btn-onboarding">Skip this step</button>
+                            <button class="back-btn">Back</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 7: Discovery Source -->
+                    <div class="step" data-step="7">
+                        <p class="auth-info-text">How did you hear about us? <span class="optional-label">(Optional)</span></p>
+                        <p class="coupon-hint" style="color: #fc6e20; font-size: 13px; font-weight: 600; margin-top: -10px; margin-bottom: 15px;"><i class="fas fa-ticket-alt"></i> Answer to unlock a welcome coupon!</p>
+                        <div class="option-grid">
+                            <button class="option-btn" data-value="Instagram"><i class="fab fa-instagram" style="margin-right: 8px; color: #E1306C; font-size: 1.1em;"></i>Instagram</button>
+                            <button class="option-btn" data-value="Friend"><i class="fas fa-user-friends" style="margin-right: 8px; color: #fc6e20; font-size: 1.1em;"></i>Friend</button>
+                            <button class="option-btn" data-value="Google"><i class="fab fa-google" style="margin-right: 8px; color: #4285F4; font-size: 1.1em;"></i>Google</button>
+                            <button class="option-btn" data-value="YouTube"><i class="fab fa-youtube" style="margin-right: 8px; color: #FF0000; font-size: 1.1em;"></i>YouTube</button>
+                            <button class="option-btn" data-value="Other"><i class="fas fa-globe" style="margin-right: 8px; color: #666; font-size: 1.1em;"></i>Other</button>
+                        </div>
+                        <input type="hidden" id="discoverySource">
+                        <div class="auth-action-group">
+                            <button id="discoverySkipBtn" class="skip-btn-onboarding">Skip this step</button>
+                            <button class="back-btn">Back</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 8: Food Preference -->
+                    <div class="step" data-step="8">
+                        <p class="auth-info-text">What do you like the most? <span class="optional-label">(Optional)</span></p>
+                        <p class="coupon-hint" style="color: #fc6e20; font-size: 13px; font-weight: 600; margin-top: -10px; margin-bottom: 15px;"><i class="fas fa-star"></i> Answer to unlock personalized coupons!</p>
+                        <div class="image-selection-grid">
+                            <div class="image-option-card" data-value="Almonds">
+                                <img src="assets/almonds.png" alt="Almonds">
+                                <span>Almonds</span>
+                            </div>
+                            <div class="image-option-card" data-value="Cashews">
+                                <img src="assets/cat 2.png" alt="Cashews">
+                                <span>Cashews</span>
+                            </div>
+                            <div class="image-option-card" data-value="Raisins">
+                                <img src="assets/cat 3.png" alt="Raisins">
+                                <span>Raisins</span>
+                            </div>
+                            <div class="image-option-card" data-value="Mixed">
+                                <img src="assets/other-dryfruits.png" alt="Mixed Dry Fruits">
+                                <span>Mixed</span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="foodPreference">
+                        <div class="auth-action-group">
+                            <button id="startShoppingBtn" class="primary-btn">Start Shopping</button>
+                            <button id="foodSkipBtn" class="skip-btn-onboarding">Skip & Start Shopping</button>
+                            <button class="back-btn">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HIDDEN HELPERS -->
+                <div id="recaptcha-container"></div>
+
+                <!-- RECOVERY FLOW -->
+                <div id="forgotPasswordSection" class="auth-section">
+                    <p class="auth-info-text">Enter your email and we'll send you a link to reset your password.</p>
+                    <input type="email" placeholder="Email" id="recoveryEmail">
+                    <div class="auth-action-group">
+                        <button id="cancelRecoveryBtn" class="btn-secondary-small">Back</button>
+                        <button id="sendRecoveryBtn" class="primary-btn">Send Link</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script type="module" src="js/login-signup.js"></script>
+    <script src="js/cursor-effect.js"></script>
+</body>
+
+</html>

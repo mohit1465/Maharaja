@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maharaja Admin Panel</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="MAHARAJA logo.svg">
+    
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8KQYRHMSKN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8KQYRHMSKN');
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #fc9220;
+            --primary-dark: #fc6e20;
+            --text-color: #1b1b1b;
+            --bg-color: #FFF8F2;
+            --card-bg: #FCFCFC;
+            --border-color: #e5e5e5;
+            --danger-color: #DE0000;
+            --success-color: #28a745;
+            --shadow: 0 4px 12px rgba(17, 17, 17, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .admin-header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .admin-brand h1 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+
+        .sidebar {
+            width: 260px;
+            background: white;
+            padding: 2rem 1rem;
+            border-right: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: var(--text-color);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .nav-item:hover {
+            background-color: #fff1e6;
+            color: var(--primary-dark);
+        }
+
+        .nav-item.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 10px rgba(252, 146, 32, 0.3);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            background: #fafafa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+        }
+
+        .grid-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        .list-item:hover {
+            transform: translateX(4px);
+            border-color: var(--primary-color);
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .item-img {
+            width: 60px;
+            height: 60px;
+            background: #eee;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Order Status Style */
+        .status-select {
+            padding: 6px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+                display: flex;
+                overflow-x: auto;
+                border-bottom: 2px solid var(--border-color);
+                border-right: none;
+            }
+
+            .nav-item {
+                margin-bottom: 0;
+                margin-right: 10px;
+                white-space: nowrap;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .list-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .item-actions {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(17, 17, 17, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .preview-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+            display: flex !important; /* Keep flex for transition, but block pointer events */
+        }
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.hidden .modal-content {
+            transform: scale(0.95);
+        }
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fafafa;
+            border-radius: 16px 16px 0 0;
+        }
+        .modal-header h3 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+        .modal-close {
+            background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;
+        }
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        /* Tag Input Styles */
+        .tag-input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 6px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+            min-height: 42px;
+            position: relative;
+            cursor: text;
+        }
+        .tag-input-container:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(252, 110, 32, 0.1);
+        }
+        .tag-pill {
+            display: inline-flex;
+            align-items: center;
+            background: #f0f0f0;
+            color: #333;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .tag-pill .remove-tag {
+            margin-left: 6px;
+            cursor: pointer;
+            color: #888;
+            font-weight: bold;
+        }
+        .tag-pill .remove-tag:hover {
+            color: var(--danger-color);
+        }
+        .tag-input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            min-width: 120px;
+            background: transparent;
+            font-size: 0.95rem;
+            padding: 4px;
+        }
+        .tag-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            margin-top: 4px;
+        }
+        .tag-suggestion-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .tag-suggestion-item:hover, .tag-suggestion-item.active {
+            background: #f8f9fa;
+            color: var(--primary-color);
+        }
+        
+        .remove-img {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Admin Table Styles */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .admin-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #555;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .admin-table tbody tr:hover {
+            background-color: #fffaf5;
+        }
+
+        .admin-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .prod-title {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
+        .prod-meta {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .tag-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #e3f2fd;
+            color: #1565c0;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin: 2px;
+            font-weight: 500;
+        }
+        .group-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #f3e5f5;
+            color: #7b1fa2;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin: 2px;
+            font-weight: 500;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body {
+                cursor: url("assets/Particles/Almond.png") 16 16, auto;
+            }
+        }
+        @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+            body,
+            body.custom-cursor-active,
+            body.custom-cursor-active * {
+                cursor: auto !important;
+            }
+        }
+        body.custom-cursor-active,
+        body.custom-cursor-active * {
+            cursor: none !important;
+        }
+        #customCursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            pointer-events: none;
+            z-index: 2147483647;
+            transform: translate(calc(-50% + 8px), calc(-50% + 8px));
+            display: none;
+            transition: transform 0.08s ease-out;
+        }
+    </style>
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+</head>
+
+<body>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p style="margin-top: 1rem; font-weight: 600;">Processing...</p>
+    </div>
+
+    <header class="admin-header">
+        <div class="admin-brand">
+            <h1>Maharaja Admin</h1>
+        </div>
+        <div class="user-info">
+            <span id="userEmail" style="display: none; font-weight: 500; font-size: 0.9rem;">Admin</span>
+            <button class="btn btn-outline" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="nav-item active" data-tab="products">
+                <i class="fas fa-box"></i> Products
+            </div>
+            <div class="nav-item" data-tab="orders">
+                <i class="fas fa-shopping-cart"></i> Orders
+            </div>
+            <div class="nav-item" data-tab="users">
+                <i class="fas fa-users"></i> Users
+            </div>
+            <div class="nav-item" data-tab="coupons">
+                <i class="fas fa-ticket-alt"></i> Coupons
+            </div>
+            <a href="index.html" class="nav-item"
+                style="margin-top: auto; border-top: 1px solid var(--border-color); border-radius: 0;">
+                <i class="fas fa-external-link-alt"></i> View Site
+            </a>
+        </aside>
+
+        <main class="main-content">
+            <!-- Products Tab -->
+            <section id="productsTab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Product Management</h2>
+                        <button class="btn btn-primary" id="addNewBtn">
+                            <i class="fas fa-plus"></i> Add Product
+                        </button>
+                        <button class="btn btn-outline" id="applySeoBtn" style="margin-left: 10px;">
+                            <i class="fas fa-magic"></i> Apply SEO Updates
+                        </button>
+                    </div>
+
+                    <!-- Form moved to Modal -->
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th width="80">Image</th>
+                                    <th>Product Details</th>
+                                    <th>Classification</th>
+                                    <th>Price & Stock</th>
+                                    <th width="120" style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productList">
+                                <!-- Products will be injected here as rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+<!-- Modals -->
+<div id="productModalOverlay" class="modal-overlay hidden">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="formTitle">Add New Product</h3>
+            <button class="modal-close" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                
+                <!-- Section 1: Basic Info -->
+                <h4 style="color: var(--primary-color); margin-bottom: 1rem;"><i class="fas fa-info-circle"></i> Basic Info</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div class="form-group">
+                        <label>Product Name (Full)</label>
+                        <input type="text" id="productName" required placeholder="e.g. American Almonds (Badam Giri) – Premium">
+                    </div>
+                    <div class="form-group">
+                        <label>Short Title (For breadcrumbs/cards)</label>
+                        <input type="text" id="productShortTitle" required placeholder="e.g. American Badam Giri">
+                    </div>
+                    <div class="form-group">
+                        <label>Hindi Name (Optional)</label>
+                        <input type="text" id="productHindiName" placeholder="e.g. बादाम">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <div class="tag-input-container" id="categoryTagInput" data-max="1" data-placeholder="Select or type category"></div>
+                        <input type="hidden" id="productCategory">
+                    </div>
+                </div>
+
+                <!-- Section 2: Pricing & Stock -->
+                <h4 style="color: var(--primary-color); margin-bottom: 1rem;"><i class="fas fa-tags"></i> Pricing & Stock</h4>
+                <div style="margin-bottom: 1.5rem;">
+                    <div id="variantsContainer" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px;">
+                        <!-- Variants will be added here -->
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="addVariantBtn" style="width: auto; padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fas fa-plus"></i> Add Quantity Pack
+                    </button>
+                    <datalist id="weightSuggestions">
+                        <!-- Options dynamically generated -->
+                    </datalist>
+                </div>
+
+                <!-- Section 3: Descriptions & SEO -->
+                <h4 style="color: var(--primary-color); margin-bottom: 1rem;"><i class="fas fa-align-left"></i> Descriptions & SEO</h4>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div class="form-group">
+                        <label>Short Description (1-2 sentences)</label>
+                        <textarea id="productShortDescription" rows="2" placeholder="Brief punchy description for cards..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Long Description Details (Full text for details page)</label>
+                        <textarea id="productLongDescription" rows="4" placeholder="Detailed product info..."></textarea>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Nutrition Shortcut Key</label>
+                            <select id="productNutritionKey">
+                                <option value="">None</option>
+                                <option value="ALMONDS">Almonds</option>
+                                <option value="WALNUTS">Walnuts</option>
+                                <option value="PINE_NUTS">Pine Nuts</option>
+                                <option value="FIGS">Figs</option>
+                                <option value="RAISINS">Raisins</option>
+                                <option value="PISTACHIOS">Pistachios</option>
+                                <option value="APRICOTS">Apricots</option>
+                                <option value="BLUEBERRIES">Blueberries</option>
+                                <option value="CASHEWS">Cashews</option>
+                                <option value="MAKHANA">Makhana</option>
+                                <option value="MIXED">Mixed</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Storage Shortcut Key</label>
+                            <select id="productStorageKey">
+                                <option value="">None</option>
+                                <option value="DEFAULT">Default (Cool Dry Place)</option>
+                                <option value="REFRIGERATE">Refrigerate</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Classification -->
+                <h4 style="color: var(--primary-color); margin-bottom: 1rem;"><i class="fas fa-sitemap"></i> Classification</h4>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div class="form-group">
+                        <label>Keywords (Type and press Enter)</label>
+                        <div class="tag-input-container" id="keywordsTagInput" data-placeholder="e.g. premium badam"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tags (e.g. Premium Choice, Farm Fresh)</label>
+                        <div class="tag-input-container" id="tagsTagInput" data-placeholder="Type tag..."></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Target Groups (e.g. GYM, Daily, Student)</label>
+                        <div class="tag-input-container" id="groupsTagInput" data-placeholder="Type group..."></div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Media -->
+                <h4 style="color: var(--primary-color); margin-bottom: 1rem;"><i class="fas fa-image"></i> Media</h4>
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <label>Product Images (Up to 5)</label>
+                    <input type="file" id="productImageInput" accept="image/*" multiple>
+                    <div id="imagePreviewContainer" class="preview-container"></div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                    <button type="button" class="btn btn-outline" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+            <!-- Orders Tab -->
+            <section id="ordersTab" class="hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Order Management</h2>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-outline btn-sm active">All</button>
+                            <button class="btn btn-outline btn-sm">Pending</button>
+                            <button class="btn btn-outline btn-sm">Delivered</button>
+                        </div>
+                    </div>
+                    <div id="orderList" class="grid-list">
+                        <p style="text-align: center; color: #666; padding: 2rem;">Loading orders...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Tab -->
+            <section id="usersTab" class="hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>User Directory</h2>
+                        <input type="text" id="userSearch" placeholder="Search users..."
+                            style="padding: 8px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    </div>
+                    <div id="userList" class="grid-list">
+                        <p style="text-align: center; color: #666; padding: 2rem;">Loading users...</p>
+                    </div>
+                </div>
+            </section>
+        
+            <!-- Coupons Tab -->
+            <section id="couponsTab" class="hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="font-size: 1.5rem; color: var(--primary-dark);">Coupon Management</h2>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="seedCouponsBtn" class="btn btn-outline" style="padding: 10px 20px; font-weight: 600;">
+                            <i class="fas fa-magic"></i> Auto-Generate Default Campaigns
+                        </button>
+                        <button id="addCouponBtn" class="btn btn-primary" style="padding: 10px 20px; font-weight: 600;">
+                            <i class="fas fa-plus"></i> Add New Coupon
+                        </button>
+                    </div>
+                </div>
+
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Discount</th>
+                                    <th>Eligibility</th>
+                                    <th>Usage / Limits</th>
+                                    <th>Status</th>
+                                    <th width="120" style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="couponList">
+                                <!-- Coupons will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Coupon Modal -->
+    <div id="couponModalOverlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="couponFormTitle">Add New Coupon</h3>
+                <button class="modal-close" id="closeCouponModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="couponForm">
+                    <input type="hidden" id="couponId">
+                    <input type="hidden" id="couponTimesUsed" value="0">
+                    
+                    <h4 style="color: var(--primary-color); margin-bottom: 1rem;"><i class="fas fa-info-circle"></i> Basic Info</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label>Coupon Code (Uppercase)</label>
+                            <input type="text" id="couponCodeInput" required placeholder="e.g. WELCOME10" style="text-transform: uppercase;">
+                        </div>
+                        <div class="form-group" style="display: flex; flex-direction: column; justify-content: center;">
+                            <label>Status</label>
+                            <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
+                                <input type="checkbox" id="couponActive" checked style="width: auto;"> Active / Playable
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Discount Type</label>
+                            <select id="couponDiscountType">
+                                <option value="percent">Percentage (%)</option>
+                                <option value="flat">Flat Amount (₹)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Discount Value</label>
+                            <input type="number" id="couponDiscountValue" required min="1" placeholder="e.g. 20">
+                        </div>
+                    </div>
+
+                    <h4 style="color: var(--primary-color); margin-bottom: 1rem;"><i class="fas fa-users"></i> Target Audience & Eligibility</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label>Eligibility Type</label>
+                            <select id="couponEligibilityType">
+                                <option value="everyone">Everyone (Default)</option>
+                                <option value="new_users">New Users (Days Threshold)</option>
+                                <option value="first_order">First Order Only</option>
+                                <option value="profile_completion">Profile Completed</option>
+                                <option value="total_spent">High Value (Total Spent > X)</option>
+                                <option value="specific_users">Specific Users (By UID)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="eligibilityThresholdContainer" style="display: none;">
+                            <label id="eligibilityThresholdLabel">Threshold Value</label>
+                            <input type="number" id="couponEligibilityThreshold" placeholder="e.g. 7 for days, 1000 for ₹">
+                        </div>
+                        <div class="form-group" id="eligibilityUidsContainer" style="grid-column: 1 / -1; display: none;">
+                            <label>Allowed UIDs (Comma separated)</label>
+                            <input type="text" id="couponAllowedUids" placeholder="uid1, uid2, ...">
+                        </div>
+                    </div>
+
+                    <h4 style="color: var(--primary-color); margin-bottom: 1rem;"><i class="fas fa-shield-alt"></i> Limits & Restrictions</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label>Min Order Value (₹)</label>
+                            <input type="number" id="couponMinOrder" placeholder="0 for no minimum">
+                        </div>
+                        <div class="form-group">
+                            <label>Expiry Date</label>
+                            <input type="datetime-local" id="couponExpiry">
+                        </div>
+                        <div class="form-group">
+                            <label>Max Uses Globally (Total pool)</label>
+                            <input type="number" id="couponMaxUsesGlobally" placeholder="Leave empty for unlimited">
+                        </div>
+                        <div class="form-group">
+                            <label>Max Uses Per User</label>
+                            <input type="number" id="couponMaxUsesPerUser" value="1" placeholder="Usually 1">
+                        </div>
+                        <div class="form-group">
+                            <label>Restrict to Categories (Comma separated)</label>
+                            <input type="text" id="couponRestrictedCategories" placeholder="e.g. Almonds, Walnuts">
+                        </div>
+                        <div class="form-group">
+                            <label>Restrict to Tags (Comma separated)</label>
+                            <input type="text" id="couponRestrictedTags" placeholder="e.g. Premium, Bestseller">
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 1rem;">
+                        <button type="button" class="btn btn-outline" id="cancelCouponBtnModal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Coupon</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Details Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeUserModal">&times;</span>
+            <h2 id="modalUserName" style="margin-bottom: 0.5rem;">User Details</h2>
+            <p id="modalUserEmail" style="color: #666; margin-bottom: 1.5rem;"></p>
+
+            <div style="display: flex; gap: 1rem; border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+                <button class="btn btn-sm modal-tab active" data-tab="cart">Cart</button>
+                <button class="btn btn-sm modal-tab" data-tab="wishlist">Wishlist</button>
+                <button class="btn btn-sm modal-tab" data-tab="addresses">Addresses</button>
+            </div>
+
+            <div id="modalTabContent" style="min-height: 200px;">
+                <!-- Content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application Scripts -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/admin.js"></script>
+    <script src="js/cursor-effect.js"></script>
+</body>
+
+</html>

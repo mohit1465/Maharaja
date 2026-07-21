@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maharaja Dry Fruits - Profile</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="MAHARAJA logo.svg">
+    
+    <!-- Google Analytics (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8KQYRHMSKN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8KQYRHMSKN');
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/search-overlay.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/verification-banner.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+</head>
+
+<body data-page="profile">
+    
+    <header class="header">
+        <div class="top-header">
+            <div class="header-left">
+                <div class="logo-container">
+                    <img src="assets/MAHARAJA logo.png" alt="Maharaja Logo" class="logo">
+                </div>
+                <div class="brand-name">
+                    <h1 style="color: white;">MAHARAJA</h1>
+                    <p class="tagline">Dry Fruit</p>
+                </div>
+            </div>
+            <div class="header-search-bar">
+                <form action="search.html" method="get">
+                    <input type="text" name="q" class="header-search-input" placeholder="Search for dry fruits, nuts, seeds..." required>
+                    <button type="submit" class="header-search-btn"><lord-icon src="https://cdn.lordicon.com/vayiyuqd.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon></button>
+                </form>
+            </div>
+            <div class="header-icons">
+                <a href="wishlist.html" class="icon" data-section="wishlist"><lord-icon src="https://cdn.lordicon.com/yucrjnnl.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon></a>
+                <a href="cart.html" class="icon" data-section="cart">
+                    <lord-icon src="https://cdn.lordicon.com/fmsilsqx.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" class="icon" data-section="profile"><lord-icon src="https://cdn.lordicon.com/spzqjmbt.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon></a>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="#" data-section="home">Home</a></li>
+                <li class="dropdown">
+                    <a href="search.html" class="dropbtn">Shop <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="search.html" class="dropdown-item">
+                            <i class="fas fa-th-large"></i>
+                            <span>All</span>
+                        </a>
+                        <a href="search.html?category=Almonds" class="dropdown-item">
+                            <img src="assets/Category/Almond.png" alt="Almonds" class="dropdown-category-icon">
+                            <span>Almonds</span>
+                        </a>
+                        <a href="search.html?category=Walnuts" class="dropdown-item">
+                            <img src="assets/Category/walnut.png" alt="Walnuts" class="dropdown-category-icon">
+                            <span>Walnuts</span>
+                        </a>
+                        <a href="search.html?category=Cashews" class="dropdown-item">
+                            <img src="assets/Category/cashew.png" alt="Cashews" class="dropdown-category-icon">
+                            <span>Cashews</span>
+                        </a>
+                        <a href="search.html?category=Pistachios" class="dropdown-item">
+                            <img src="assets/Category/pistachio.png" alt="Pistachios" class="dropdown-category-icon">
+                            <span>Pistachios</span>
+                        </a>
+                        <a href="search.html?category=Other Dry Fruits" class="dropdown-item">
+                            <img src="assets/Category/Almond.png" alt="Other Dry Fruits" class="dropdown-category-icon">
+                            <span>More</span>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="#" data-section="about">About Us</a></li>
+                <li><a href="#" data-section="contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="profile-section">
+            <div class="profile-container">
+                <!-- Breadcrumb -->
+                <div class="breadcrumb" id="breadcrumb">
+                    <span class="breadcrumb-item" data-section="home">Home</span>
+                    <span class="breadcrumb-separator">&gt;</span>
+                    <span class="breadcrumb-item current">Profile</span>
+                </div>
+
+                <!-- Email Verification Banner -->
+                <div id="verificationBanner" class="verification-banner" style="display: none;">
+                    <div class="verification-content">
+                        <div class="verification-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="verification-text">
+                            <h4>Email Verification Required</h4>
+                            <p id="verificationMessage">Please verify your email address to unlock Coupons and Free Delivery on your first 2 orders.</p>
+                            <p class="verification-email">Email: <span id="verificationUserEmail">...</span></p>
+                        </div>
+                        <div class="verification-actions">
+                            <button id="resendVerificationBtn" class="btn btn-primary">Resend Verification</button>
+                            <button id="dismissBannerBtn" class="btn btn-secondary">Dismiss</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Completion Widget (Hidden by default) -->
+                <div id="profileCompletionWidget" class="completion-widget">
+                    <div class="completion-rewards-icon"><i class="fas fa-gift"></i></div>
+                    <div class="completion-header">
+                        <h4>Unlock Exclusive Coupons</h4>
+                        <span id="completionProgressText">0%</span>
+                    </div>
+                    <p class="completion-subtext">Complete your profile details below to reveal personalized coupons and free delivery perks!</p>
+                    <div class="completion-progress-bar">
+                        <div class="completion-progress-fill" id="completionProgressFill"></div>
+                    </div>
+                    
+                    <div id="missingStepsContainer" class="missing-steps">
+                        <!-- Dynamic content injected by profile.js -->
+                    </div>
+                </div>
+
+                <!-- Profile Header Card -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="avatar-container">
+                            <div class="profile-avatar">
+                                <!-- Orange Circle as per design -->
+                            </div>
+                            <button class="edit-avatar-overlay-btn" id="editAvatarBtn" title="Change Profile Picture">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <div class="profile-info" style="flex: 1;">
+                            <h2 class="profile-name" id="userName">User</h2>
+                            <p class="profile-email" id="userEmail">Please Login for More Details.</p>
+                        </div>
+                        <!-- Dynamic Coupon Stack -->
+                        <div class="coupon-stack-widget" id="profileCouponStack" style="display: none;" onclick="window.location.href='coupons.html'">
+                            <div class="stack-badge" id="couponCountBadge">0</div>
+                            <div class="stack-cards" id="stackCardsContainer">
+                                <!-- Cards injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Action Cards -->
+                    <div class="quick-actions">
+                        <div class="action-card primary" onclick="window.location.href='orders.html'">
+                            <div class="card-icon">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 style="color: white;">My Orders</h3>
+                                <p class="insight" id="orderCount">Tap to view</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                        <div class="action-card secondary" onclick="window.location.href='wishlist.html'">
+                            <div class="card-icon">
+                                <lord-icon src="https://cdn.lordicon.com/yucrjnnl.json" trigger="hover" colors="primary:#ffffff" style="width:24px;height:24px"></lord-icon>
+                            </div>
+                            <div class="card-content">
+                                <h3>Wishlist</h3>
+                                <p class="insight" id="wishlistCount">Tap to view</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verification Status -->
+                <div class="verification-status-card">
+                    <span class="label">Verification Status</span>
+                    <span class="status" id="emailVerificationStatus">Checking...</span>
+                </div>
+
+                <!-- Profile Menu -->
+                <div class="profile-menu-container">
+                    <div class="menu-list">
+                        <div class="menu-row" id="myCouponsMenuRow" onclick="window.location.href='coupons.html'">
+                            <span style="display: flex; align-items: center; gap: 10px;">
+                                My Coupons
+                                <span class="badge" id="myCouponsMenuBadge" style="display: none; background: #fc6e20; color: white; padding: 2px 6px; font-size: 0.7rem; border-radius: 4px;">New</span>
+                            </span>
+                        </div>
+                        <div class="menu-row" onclick="window.location.href='addresses.html'">
+                            <span>Manage Addresses</span>
+                        </div>
+                        <div class="menu-row" onclick="window.location.href='about.html'">
+                            <span>About Us</span>
+                        </div>
+                        <div class="menu-row" onclick="window.location.href='contact.html'">
+                            <span>Contact Us</span>
+                        </div>
+                        <div class="menu-row logout" id="logoutBtn">
+                            <span>Logout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating WhatsApp Icon -->
+    <a href="https://wa.link/b3z7vx" target="_blank" class="floating-whatsapp" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-bg">
+            <svg viewBox="0 0 400 80" preservedAspectRatio="none">
+                <path d="M 0 20 
+                         Q 0 0 20 0 
+                         L 145 0 
+                         Q 165 0 165 20 
+                         A 35 35 0 0 0 235 20 
+                         Q 235 0 255 0 
+                         L 380 0 
+                         Q 400 0 400 20 
+                         L 400 80 
+                         L 0 80 
+                         Z" filter="url(#shadow)" />
+                <defs>
+                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="5" />
+                        <feOffset dx="0" dy="4" result="offsetblur" />
+                        <feComponentTransfer>
+                            <feFuncA type="linear" slope="0.1" />
+                        </feComponentTransfer>
+                        <feMerge>
+                            <feMergeNode />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                </defs>
+            </svg>
+        </div>
+        <div class="mobile-nav-icons">
+            <a href="index.html" data-section="home" title="Home">
+                <lord-icon src="https://cdn.lordicon.com/ewtxwele.json" trigger="hover" colors="primary:#ffffff" style="width:24px;height:24px"></lord-icon>
+                <div class="active-dot"></div>
+            </a>
+            <a href="wishlist.html" data-section="wishlist" title="Wishlist">
+                <lord-icon src="https://cdn.lordicon.com/yucrjnnl.json" trigger="hover" colors="primary:#ffffff" style="width:24px;height:24px"></lord-icon>
+                <div class="active-dot"></div>
+            </a>
+
+            <div class="nav-extra-space"></div> <!-- Space for the cutout -->
+
+            <a href="search.html" data-section="search" title="Search" class="nav-item-special">
+                <lord-icon src="https://cdn.lordicon.com/vayiyuqd.json" trigger="hover" colors="primary:#ffffff" style="width:20px;height:20px"></lord-icon>
+            </a>
+
+            <a href="cart.html" data-section="cart" title="Cart">
+                <lord-icon src="https://cdn.lordicon.com/fmsilsqx.json" trigger="hover" colors="primary:#ffffff" style="width:24px;height:24px"></lord-icon>
+                <span class="cart-count">0</span>
+                <div class="active-dot"></div>
+            </a>
+            <a href="profile.html" data-section="profile" class="mobile-profile-btn-wrapper" title="Profile">
+                <span class="mobile-profile-btn"><lord-icon src="https://cdn.lordicon.com/spzqjmbt.json" trigger="hover" colors="primary:#ffffff" style="width:26px;height:26px"></lord-icon></span>
+                <div class="active-dot"></div>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Avatar Selection Modal -->
+    <div class="avatar-modal-backdrop" id="avatarModalBackdrop" style="display: none;"></div>
+    <div class="avatar-modal" id="avatarModal" style="display: none;">
+        <div class="avatar-modal-header">
+            <h3>Choose Profile Picture</h3>
+            <button class="avatar-modal-close" id="closeAvatarModalBtn">&times;</button>
+        </div>
+        <div class="avatar-modal-body">
+            <div class="avatar-options-grid">
+                <!-- Option 1: Google Photo -->
+                <div class="avatar-option-card" id="avatarOptionGoogle" data-avatar-type="google">
+                    <div class="avatar-option-preview" id="googlePhotoPreview">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <span>Google Photo</span>
+                </div>
+                <!-- Option 2: Default Initials -->
+                <div class="avatar-option-card" id="avatarOptionDefault" data-avatar-type="default">
+                    <div class="avatar-option-preview initials-preview" id="defaultInitialsPreview">
+                        JD
+                    </div>
+                    <span>Default Picture</span>
+                </div>
+                <!-- Male Preset 1 -->
+                <div class="avatar-option-card" data-avatar-type="male-1">
+                    <div class="avatar-option-preview preset-preview" id="male1Preview"></div>
+                    <span>Male 1</span>
+                </div>
+                <!-- Male Preset 2 -->
+                <div class="avatar-option-card" data-avatar-type="male-2">
+                    <div class="avatar-option-preview preset-preview" id="male2Preview"></div>
+                    <span>Male 2</span>
+                </div>
+                <!-- Female Preset 1 -->
+                <div class="avatar-option-card" data-avatar-type="female-1">
+                    <div class="avatar-option-preview preset-preview" id="female1Preview"></div>
+                    <span>Female 1</span>
+                </div>
+                <!-- Female Preset 2 -->
+                <div class="avatar-option-card" data-avatar-type="female-2">
+                    <div class="avatar-option-preview preset-preview" id="female2Preview"></div>
+                    <span>Female 2</span>
+                </div>
+            </div>
+        </div>
+        <div class="avatar-modal-footer">
+            <button class="btn btn-secondary" id="cancelAvatarBtn">Cancel</button>
+            <button class="btn btn-primary" id="saveAvatarBtn">Save Changes</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script type="module" src="js/auth-state.js"></script>
+<script type="module" src="js/data-cache.js"></script>
+<script type="module" src="js/category-loader.js"></script>
+    <script type="module" src="js/cart-count.js"></script>
+    <script type="module" src="js/profile.js"></script>
+    <script type="module" src="js/profile-verification.js"></script>
+    <script src="js/cursor-effect.js"></script>
+    <script type="module" src="js/search-overlay.js"></script>
+</body>
+
+</html>
