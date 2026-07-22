@@ -6,7 +6,6 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-s
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyB58VYjQEQE14d7P1XpA29ObwAn63ebIRQ",
     authDomain: "maharaja-489c9.firebaseapp.com",
     projectId: "maharaja-489c9",
     storageBucket: "maharaja-489c9.firebasestorage.app",
